@@ -1,2 +1,2 @@
 # AuctionProject
- Projet application wen d'enchère en ligne
+ Projet application web d'enchères en ligne
