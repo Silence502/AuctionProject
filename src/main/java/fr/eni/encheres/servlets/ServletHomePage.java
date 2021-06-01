@@ -2,6 +2,8 @@ package fr.eni.encheres.servlets;
 
 import java.io.IOException;
 
+import fr.eni.encheres.bll.UtilisateurManager;
+import fr.eni.encheres.bo.Utilisateur;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -43,8 +45,32 @@ public class ServletHomePage extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	// TODO Auto-generated method stub
-	doGet(request, response);
+	Utilisateur utilisateur = new Utilisateur();
+	
+	String pseudo = request.getParameter("pseudo");
+	String nom = request.getParameter("nom");
+	String prenom = request.getParameter("prenom");
+	String email = request.getParameter("email");
+	String telephone = request.getParameter("telephone");
+	String rue = request.getParameter("rue");
+	String codePostal = request.getParameter("codePostal");
+	String ville = request.getParameter("ville");
+	String motDePasse = request.getParameter("motDePasse");
+	
+	utilisateur.setPseudo(pseudo);
+	utilisateur.setNom(nom);
+	utilisateur.setPrenom(prenom);
+	utilisateur.setEmail(email);
+	utilisateur.setTelephone(telephone);
+	utilisateur.setRue(rue);
+	utilisateur.setCodePostal(codePostal);
+	utilisateur.setVille(ville);
+	utilisateur.setMotDePasse(motDePasse);
+	
+	UtilisateurManager utilisateurManager = new UtilisateurManager();
+	utilisateurManager.addUtilisateur(utilisateur);
+	
+	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+	rd.forward(request, response);
     }
-
 }

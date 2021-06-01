@@ -8,16 +8,42 @@ public class Utilisateur {
     private String email;
     private String telephone;
     private String rue;
-    private Integer codePostal;
+    private String codePostal;
     private String ville;
     private String motDePasse;
     private Integer credit;
-    private boolean administrateur;
+    private Integer administrateur;
     /**
      * Constructeur par défaut
      */
     public Utilisateur() {
     }
+    /**
+     * @param pseudo
+     * @param nom
+     * @param prenom
+     * @param email
+     * @param telephone
+     * @param rue
+     * @param codePostal
+     * @param ville
+     * @param motDePasse
+     * Constructeur pour un utilisateur non administrateur pour remplissage
+     * de formulaire.
+     */
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+	    String rue, String codePostal, String ville, String motDePasse) {
+	this.pseudo = pseudo;
+	this.nom = nom;
+	this.prenom = prenom;
+	this.email = email;
+	this.telephone = telephone;
+	this.rue = rue;
+	this.codePostal = codePostal;
+	this.ville = ville;
+	this.motDePasse = motDePasse;
+    }
+    
     /**
      * @param noUtilisateur
      * @param pseudo
@@ -33,7 +59,7 @@ public class Utilisateur {
      * Constructeur complet pour un utilisateur non administrateur
      */
     public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-	    String rue, Integer codePostal, String ville, String motDePasse, Integer credit) {
+	    String rue, String codePostal, String ville, String motDePasse, Integer credit) {
 	this.noUtilisateur = noUtilisateur;
 	this.pseudo = pseudo;
 	this.nom = nom;
@@ -62,7 +88,7 @@ public class Utilisateur {
      * Constructeur complet pour un utilisateur administrateur
      */
     public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-	    String rue, Integer codePostal, String ville, String motDePasse, Integer credit, boolean administrateur) {
+	    String rue, String codePostal, String ville, String motDePasse, Integer credit, Integer administrateur) {
 	this.noUtilisateur = noUtilisateur;
 	this.pseudo = pseudo;
 	this.nom = nom;
@@ -178,14 +204,14 @@ public class Utilisateur {
      * Getter de codePostal
      * @return codePostal
      */
-    public Integer getCodePostal() {
+    public String getCodePostal() {
         return codePostal;
     }
     /**
      * Setter de codePostal
      * @param codePostal étant codePostal à paramétrer de type Integer
      */
-    public void setCodePostal(Integer codePostal) {
+    public void setCodePostal(String codePostal) {
         this.codePostal = codePostal;
     }
     /**
@@ -234,14 +260,14 @@ public class Utilisateur {
      * Getter de administrateur
      * @return administrateur
      */
-    public boolean isAdministrateur() {
+    public Integer isAdministrateur() {
         return administrateur;
     }
     /**
      * Setter de administrateur
      * @param administrateur étant administrateur à paramétrer de type boolean
      */
-    public void setAdministrateur(boolean administrateur) {
+    public void setAdministrateur(Integer administrateur) {
         this.administrateur = administrateur;
     }
     @Override
