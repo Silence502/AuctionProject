@@ -27,6 +27,7 @@
 			<div class="col col-md-4-justify-content box"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Inscription</h1>
+				<cite>Toutes les mentions sont obligatoires</cite>
 				<form method="POST" action=""
 					style="display: flex; align-content: center; align-items: center; flex-direction: column">
 					<label for="pseudo">Pseudo</label> <input name="pseudo" type="text"
