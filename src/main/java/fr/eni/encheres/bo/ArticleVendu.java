@@ -13,6 +13,8 @@ public class ArticleVendu implements Serializable {
 	private int miseAPrix;
 	private int prixVente;
 	private EtatVente etatVente;
+	private Retrait lieuRetrait;
+	private Categorie categorieArticle;
 	
 	
 	public ArticleVendu() {
