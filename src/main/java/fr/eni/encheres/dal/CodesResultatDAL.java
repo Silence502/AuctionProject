@@ -16,9 +16,9 @@ public abstract class CodesResultatDAL {
 	public static final int INSERT_OBJET_ECHEC=10001;
 	
 	/**
-	 * Echec de l'insertion d'un avis à cause de la note
+	 * Echec de l'insertion d'un article
 	 */
-	public static final int INSERT_AVIS_ARTICLE_VENDU_ECHEC=10002;
+	public static final int INSERT_ARTICLE_VENDU_ECHEC=10002;
 	
 	
 }
