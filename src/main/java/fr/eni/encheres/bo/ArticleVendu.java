@@ -22,14 +22,48 @@ public class ArticleVendu implements Serializable {
 
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix) {
-		super();
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente, Retrait lieuRetrait,
+			Categorie categorieArticle) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.lieuRetrait = lieuRetrait;
+		this.categorieArticle = categorieArticle;
+	}
+
+
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, int prixVente, EtatVente etatVente, Retrait lieuRetrait, Categorie categorieArticle) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.lieuRetrait = lieuRetrait;
+		this.categorieArticle = categorieArticle;
+	}
+
+	
+
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, int prixVente, Retrait lieuRetrait, Categorie categorieArticle) {
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.lieuRetrait = lieuRetrait;
+		this.categorieArticle = categorieArticle;
+		this.etatVente = EtatVente.NON_DEBUTEE; // Quand la création de la vente se fait, l'état de la vente est logiquement à NON_DEBUTEE
 	}
 
 
@@ -111,6 +145,16 @@ public class ArticleVendu implements Serializable {
 	public void setEtatVente(EtatVente etatVente) {
 		this.etatVente = etatVente;
 	}
+
+
+	@Override
+	public String toString() {
+		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
+				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", lieuRetrait=" + lieuRetrait
+				+ ", categorieArticle=" + categorieArticle + "]";
+	}
+	
 	
 	
 	
