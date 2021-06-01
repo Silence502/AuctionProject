@@ -21,15 +21,20 @@
 		<![endif]-->
 	<div class="container">
 		<div class="row">
-			<div class="col col-md-4-justify-content box">
+			<div class="col col-md-4-justify-content box"
+				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Connexion</h1>
 				<h2>Se connecter</h2>
-				<form method="POST" action="">
+				<form method="POST" action=""
+					style="display: flex; align-content: center; align-items: center; flex-direction: column">
 					<label for="pseudo">Pseudo</label> <input type="text"
 						placeholder="pseudo" autofocus="autofocus" required="required"> <label
 						for="motDePasse">Mot de passe</label> <input type="password"
-						placeholder="*******" required="required"> <input type="submit"
+						placeholder="*******" required="required">
+						<br>
+						<input type="submit"
 						value="Connexion">
+						<a href="home.jsp">Retour</a>
 				</form>
 			</div>
 		</div>
