@@ -19,7 +19,19 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
-	<h1>Test</h1>
+	<h1>Accueil</h1>
+	<h2>Se connecter</h2>
+	<form action="">
+		<label for="pseudo">Pseudo</label>
+		<input type="text" placeholder="pseudo" autofocus="autofocus">
+		<label for="motDePasse">Mot de passe</label>
+		<input type="password" placeholder="*******">
+		<input type="submit" value="Connexion">
+	</form>
+	<h2>S'inscrire</h2>
+	<form action="">
+		<input type="submit" value="Inscription">
+	</form>
 
 	<script src=""></script>
 </body>
