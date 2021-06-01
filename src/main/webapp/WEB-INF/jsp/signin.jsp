@@ -22,7 +22,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-4-justify-content box">
-				<h1>Accueil</h1>
+				<h1>Connexion</h1>
 				<h2>Se connecter</h2>
 				<form method="POST" action="">
 					<label for="pseudo">Pseudo</label> <input type="text"
@@ -34,7 +34,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script src=""></script>
 </body>
 </html>

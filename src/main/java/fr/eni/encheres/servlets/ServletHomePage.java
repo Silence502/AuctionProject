@@ -46,5 +46,4 @@ public class ServletHomePage extends HttpServlet {
 	// TODO Auto-generated method stub
 	doGet(request, response);
     }
-
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -12,7 +12,10 @@
 <title></title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
 <link rel="stylesheet" href="../css/signup-style.css">
 </head>
 <body>
@@ -21,12 +24,35 @@
 		<![endif]-->
 	<div class="container">
 		<div class="row">
-			<div class="col col-md-4-justify-content box">
+			<div class="col col-md-4-justify-content box"
+				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Inscription</h1>
+				<form method="POST" action=""
+					style="display: flex; align-content: center; align-items: center; flex-direction: column">
+					<label for="pseudo">Pseudo</label> <input name="pseudo" type="text"
+						placeholder="pseudo" required="required"> <label for="nom">Nom</label>
+					<input name="nom" type="text" placeholder="nom" required="required">
+					<label for="prenom">Prenom</label> <input name="prenom" type="text"
+						placeholder="prenom" required="required"> <label
+						for="email">Adresse mail</label> <input name="email" type="email"
+						placeholder="email" required="required"> <label
+						for="telephone">Telephone</label> <input name="telephone"
+						type="tel" placeholder="telephone" required="required"> <label
+						for="rue">Rue</label> <input name="rue" type="text"
+						placeholder="rue" required="required"> <label
+						for="codePostal">Dode postal</label> <input name="codePostal"
+						type="text" placeholder="code postal" required="required">
+					<label for="ville">Ville</label> <input name="ville" type="text"
+						placeholder="ville" required="required"> <label
+						for="motDePasse">Mot de passe</label> <input name="motDePasse"
+						type="password" placeholder="*******" required="required">
+					<input type="submit" value="Envoyer">
+					<input type="button" formaction="../google.com" value="Retour">
+				</form>
 			</div>
 		</div>
 	</div>
-	
+
 	<script src=""></script>
 </body>
 </html>
