@@ -12,8 +12,9 @@ import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.UtilisateurDAO;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
+    @SuppressWarnings("unused")
     private Utilisateur utilisateur;
-    private final String INSERT = "INSERT INTO Utilisateur(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES (?,?,?,?,?,?,?,?,?)";
+    private final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,0,0)";
     
     PreparedStatement stmt = null;
     
@@ -27,7 +28,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    stmt.setString(4, utilisateur.getEmail());
 	    stmt.setString(5, utilisateur.getTelephone());
 	    stmt.setString(6, utilisateur.getRue());
-	    stmt.setInt(7, utilisateur.getCodePostal());
+	    stmt.setString(7, utilisateur.getCodePostal());
 	    stmt.setString(8, utilisateur.getVille());
 	    stmt.setString(9, utilisateur.getMotDePasse());
 	    stmt.execute();
@@ -35,6 +36,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    if (rs.next()) {
 		utilisateur.setNoUtilisateur(1);
 	    }
+	    stmt.close();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
