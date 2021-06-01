@@ -22,8 +22,19 @@ public class ServletHomePage extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/signup.jsp");
-	rd.forward(request, response);
+	
+	String con = request.getParameter("connexion");
+	String ins = request.getParameter("inscription");
+	
+	RequestDispatcher rd;
+	
+	if (con != null) {
+	    rd = request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp");
+	    rd.forward(request, response);
+	} else if (ins != null) {
+	    rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
+	    rd.forward(request, response);
+	}
     }
 
     /**
