@@ -2,6 +2,9 @@ package fr.eni.encheres.servlets;
 
 import java.io.IOException;
 
+import fr.eni.encheres.bll.UtilisateurManager;
+import fr.eni.encheres.bo.Utilisateur;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,7 +24,6 @@ public class ServletConnection extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	// TODO Auto-generated method stub
 	response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
@@ -31,8 +33,25 @@ public class ServletConnection extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	// TODO Auto-generated method stub
-	doGet(request, response);
+
+	String pseudo = request.getParameter("pseudo");
+	String motDePasse = request.getParameter("motDePasse");
+
+	UtilisateurManager utilisateurManager = new UtilisateurManager();
+	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(pseudo, motDePasse);
+	request.setAttribute("user", utilisateur);
+
+	try {
+	    System.out.println("Pseudo : " + utilisateur.getPseudo());
+	    System.out.println("Mot de passe : " + utilisateur.getMotDePasse());
+	} catch (NullPointerException e) {
+	    e.printStackTrace();
+	}
+
+//	System.out.println(utilisateur.toString());
+
+	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connected.jsp");
+	rd.forward(request, response);
     }
 
 }

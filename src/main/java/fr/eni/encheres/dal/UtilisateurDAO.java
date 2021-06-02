@@ -10,4 +10,5 @@ public interface UtilisateurDAO {
     public List<Utilisateur> selectAll();
     public void update(Utilisateur utilisateur);
     public void delete(int id);
+    public Utilisateur selectByPseudo(String pseudo, String mdp);
 }

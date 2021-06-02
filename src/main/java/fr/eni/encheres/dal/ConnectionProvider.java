@@ -26,9 +26,6 @@ public abstract class ConnectionProvider {
     }
 
     /**
-     * Cette méthode retourne une connection opérationnelle issue du pool de
-     * connexion vers la base de données.
-     * 
      * @return
      * @throws SQLException
      */

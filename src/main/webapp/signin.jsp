@@ -25,15 +25,15 @@
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Connexion</h1>
 				<h2>Se connecter</h2>
-				<form method="POST" action=""
+				<form method="POST" action="${pageContext.request.contextPath}/ServletConnection"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
-					<label for="pseudo">Pseudo</label> <input type="text"
-						placeholder="pseudo" autofocus="autofocus" required="required" 
-							style="margin-bottom: 15px;"> <label
-						for="motDePasse">Mot de passe</label> <input type="password"
-						placeholder="*******" required="required" 
+					<label for="pseudo">Pseudo</label> 
+					<input type="text" name="pseudo" placeholder="pseudo" autofocus="autofocus" required="required" 
 							style="margin-bottom: 15px;">
-						<input type="submit"
+					<label for="motDePasse">Mot de passe</label> 
+					<input type="password" name="motDePasse" placeholder="*******" required="required" 
+							style="margin-bottom: 15px;">
+					<input type="submit"
 						value="Connexion">
 				</form>
 				<form method="GET"
