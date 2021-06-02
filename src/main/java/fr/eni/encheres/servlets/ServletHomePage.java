@@ -25,18 +25,8 @@ public class ServletHomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 	
-	String con = request.getParameter("connexion");
-	String ins = request.getParameter("inscription");
-	
-	RequestDispatcher rd;
-	
-	if (con != null) {
-	    rd = request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp");
-	    rd.forward(request, response);
-	} else if (ins != null) {
-	    rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
-	    rd.forward(request, response);
-	}
+	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
+	rd.forward(request, response);
     }
 
     /**
@@ -69,6 +59,8 @@ public class ServletHomePage extends HttpServlet {
 	
 	UtilisateurManager utilisateurManager = new UtilisateurManager();
 	utilisateurManager.addUtilisateur(utilisateur);
+	
+	System.out.println(utilisateur.toString());
 	
 	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
 	rd.forward(request, response);

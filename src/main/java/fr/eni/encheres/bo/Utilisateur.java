@@ -45,7 +45,6 @@ public class Utilisateur {
     }
     
     /**
-     * @param noUtilisateur
      * @param pseudo
      * @param nom
      * @param prenom
@@ -58,9 +57,8 @@ public class Utilisateur {
      * @param credit
      * Constructeur complet pour un utilisateur non administrateur
      */
-    public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 	    String rue, String codePostal, String ville, String motDePasse, Integer credit) {
-	this.noUtilisateur = noUtilisateur;
 	this.pseudo = pseudo;
 	this.nom = nom;
 	this.prenom = prenom;

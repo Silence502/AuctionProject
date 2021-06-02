@@ -48,7 +48,7 @@
 						for="motDePasse">Mot de passe</label> <input name="motDePasse"
 						type="password" placeholder="*******" required="required">
 					<input type="submit" value="Envoyer">
-					<a href="home.jsp">Retour</a>
+					<a href="signin.jsp">Retour</a>
 				</form>
 			</div>
 		</div>

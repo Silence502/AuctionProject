@@ -15,6 +15,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     @SuppressWarnings("unused")
     private Utilisateur utilisateur;
     private final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,0,0)";
+    private final String SELECT = "SELECT * FROM UTILISATEURS WHERE noUtilisateur=?";
     
     PreparedStatement stmt = null;
     
@@ -44,6 +45,27 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
     @Override
     public Utilisateur selectById(int id) {
+	try (Connection con = ConnectionProvider.getConnection()) {
+	    stmt = con.prepareStatement(SELECT);
+	    stmt.setInt(1, id);
+	    ResultSet rs = stmt.executeQuery();
+	    if (rs.next()) {
+		utilisateur = new Utilisateur(
+			rs.getString("pseudo"),
+			rs.getString("nom"),
+			rs.getString("prenom"),
+			rs.getString("email"),
+			rs.getString("telephone"),
+			rs.getString("rue"),
+			rs.getString("code_postal"),
+			rs.getString("ville"),
+			rs.getString("mot_de_passe"),
+			rs.getInt("credit"));
+	    }
+	    stmt.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
 	return null;
     }
 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -26,13 +26,7 @@
 		<div class="row">
 			<div class="col col-md-4-justify-content box">
 				<h1>Accueil</h1>
-				<form method="GET" 
-					action="<%=request.getContextPath()%>/ServletHomePage">
-					<h2>Se connecter</h2>
-					<input name="connexion" type="submit" value="Connexion">
-					<h2>S'inscrire</h2>
-					<input name="inscription" type="submit" value="Inscription">
-				</form>
+				<a href="signin.jsp">Se connecter - S'inscrire</a>
 			</div>
 		</div>
 	</div>
