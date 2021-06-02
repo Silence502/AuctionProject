@@ -24,7 +24,7 @@
 		<![endif]-->
 	<div class="container">
 		<div class="row">
-			<div class="col col-md-4-justify-content box"
+			<div class="col col-md-4-justify-content"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Inscription</h1>
 				
