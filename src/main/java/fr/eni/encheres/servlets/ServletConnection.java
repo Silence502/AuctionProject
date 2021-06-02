@@ -1,6 +1,7 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
@@ -48,10 +49,14 @@ public class ServletConnection extends HttpServlet {
 	    e.printStackTrace();
 	}
 
-//	System.out.println(utilisateur.toString());
+	if (utilisateur != null) {
+	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connected.jsp");
+	    rd.forward(request, response);
+	} else {
+	    RequestDispatcher rd = request.getRequestDispatcher("/signin.jsp");
+	    rd.forward(request, response);
+	}
 
-	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connected.jsp");
-	rd.forward(request, response);
     }
 
 }

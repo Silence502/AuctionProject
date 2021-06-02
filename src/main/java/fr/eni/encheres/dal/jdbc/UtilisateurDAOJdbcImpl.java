@@ -67,7 +67,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	return null;
+	return utilisateur;
     }
     
     @Override
@@ -94,9 +94,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	return null;
+	return utilisateur;
     }
 
+    
+    
     @Override
     public List<Utilisateur> selectAll() {
 	return null;

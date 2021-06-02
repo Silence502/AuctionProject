@@ -21,12 +21,14 @@
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 
-	<h2>Connecté sous :</h2>
+	<h2>Connecté</h2>
 	
-	<c:if test="${!empty utilisateur}">
-		<p>${utilisateur.pseudo}</p>
+	<c:if test="${!empty user}">
+		<p>Pseudo : ${user.pseudo}</p>
+		<p>Nom : ${user.nom} ${user.prenom}</p>
+		<p>Crédit : ${user.credit}</p>
 	</c:if>
-	<c:if test="${empty utilisateur}">
+	<c:if test="${empty user}">
 		<p>Pas d'utilisateur</p>
 	</c:if>
 	<script src=""></script>
