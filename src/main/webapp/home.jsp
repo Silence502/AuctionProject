@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -27,7 +28,14 @@
 			<div class="col col-md-4-justify-content box"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
 				<h1>Accueil</h1>
-				<a href="signin.jsp">Se connecter - S'inscrire</a>
+				<c:if test="${empty userSession}">
+					<a href="signin.jsp">Se connecter - S'inscrire</a>
+					<p>Aucune session</p>
+				</c:if>
+				<c:if test="${!empty userSession}">
+					<a href="${pageContext.request.contextPath}/ServletConnection">Se déconnecter</a>
+					<p>Session ouverte</p>
+				</c:if>
 			</div>
 		</div>
 	</div>

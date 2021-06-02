@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletConnection
@@ -25,7 +26,14 @@ public class ServletConnection extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	response.getWriter().append("Served at: ").append(request.getContextPath());
+	
+	HttpSession session = request.getSession(false);
+	
+	if (session != null) {
+	    session.invalidate();
+	}
+	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+	rd.forward(request, response);
     }
 
     /**
@@ -34,7 +42,8 @@ public class ServletConnection extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-
+	HttpSession session = request.getSession();
+	
 	//Récupération des champs du formulaire d'inscription
 	String pseudo = request.getParameter("pseudo");
 	String motDePasse = request.getParameter("motDePasse");
@@ -48,6 +57,7 @@ public class ServletConnection extends HttpServlet {
 
 	if (utilisateur != null) {
 	    //Si le constructeur à récupéré toutes les données
+	    session.setAttribute("userSession", utilisateur);
 	    response.sendRedirect("home.jsp");
 	} else {
 	    //Si le constructeur n'a récupéré aucune données
