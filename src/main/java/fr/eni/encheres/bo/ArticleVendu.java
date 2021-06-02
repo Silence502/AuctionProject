@@ -5,6 +5,11 @@ import java.time.LocalDate;
 
 public class ArticleVendu implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int noArticle;
 	private String nomArticle;
 	private String description;
@@ -39,7 +44,6 @@ public class ArticleVendu implements Serializable {
 
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			int miseAPrix, int prixVente, EtatVente etatVente, Retrait lieuRetrait, Categorie categorieArticle) {
-		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
@@ -64,6 +68,45 @@ public class ArticleVendu implements Serializable {
 		this.lieuRetrait = lieuRetrait;
 		this.categorieArticle = categorieArticle;
 		this.etatVente = EtatVente.NON_DEBUTEE; // Quand la création de la vente se fait, l'état de la vente est logiquement à NON_DEBUTEE
+	}
+	
+	
+
+
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, int prixVente) {
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+	}
+
+	
+
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, int prixVente, Categorie categorieArticle) {
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.categorieArticle = categorieArticle;
+	}
+
+
+	
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, Categorie categorieArticle) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.categorieArticle = categorieArticle;
 	}
 
 
@@ -144,6 +187,27 @@ public class ArticleVendu implements Serializable {
 
 	public void setEtatVente(EtatVente etatVente) {
 		this.etatVente = etatVente;
+	}
+
+	
+
+	public Retrait getLieuRetrait() {
+		return lieuRetrait;
+	}
+
+
+	public void setLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
+	}
+
+
+	public Categorie getCategorieArticle() {
+		return categorieArticle;
+	}
+
+
+	public void setCategorieArticle(Categorie categorieArticle) {
+		this.categorieArticle = categorieArticle;
 	}
 
 

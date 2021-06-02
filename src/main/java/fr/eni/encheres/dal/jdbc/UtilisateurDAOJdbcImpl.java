@@ -1,6 +1,7 @@
 package fr.eni.encheres.dal.jdbc;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import fr.eni.encheres.bo.Utilisateur;
-import fr.eni.encheres.dal.ConnectionProvider;
+import fr.eni.encheres.dal.jdbc.ConnectionProvider;
 import fr.eni.encheres.dal.UtilisateurDAO;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {

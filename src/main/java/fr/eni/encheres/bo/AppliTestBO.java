@@ -17,7 +17,7 @@ public class AppliTestBO {
 	Retrait lieuRetrait = new Retrait("Rue Principale", "59000", "Lille");
 	Categorie cat = new Categorie(2, "MAISON");
 	ArticleVendu unArticle = new ArticleVendu (1, "Fauteuil", "Très moelleux", dateDebut, dateFin, 200, 389, EtatVente.TERMINEE, lieuRetrait, cat); 
-	System.out.println("\nREM : Affichage d'un article Stylo 'Bic'");
+	System.out.println("\nREM : Affichage d'un article");
 	System.out.println(unArticle.toString());
     }
 

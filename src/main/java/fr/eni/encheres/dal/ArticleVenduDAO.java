@@ -2,7 +2,9 @@ package fr.eni.encheres.dal;
 
 import fr.eni.encheres.BusinessException;
 
+
 import fr.eni.encheres.bo.ArticleVendu;
+
 
 
 public interface ArticleVenduDAO {
@@ -11,5 +13,8 @@ public interface ArticleVenduDAO {
 	 * @param article
 	 * @throws BusinessException
 	 */
+	
 	public void insert(ArticleVendu article) throws BusinessException;
-}
+		
+	}
+

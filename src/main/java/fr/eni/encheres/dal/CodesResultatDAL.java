@@ -20,5 +20,4 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int INSERT_ARTICLE_VENDU_ECHEC=10002;
 	
-	
 }
