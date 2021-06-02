@@ -26,7 +26,7 @@
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Connexion</h1>
 				<h2>Se connecter</h2>
-				<c:if test="${empty user}"><cite>Pseudo ou mot de passe incorrect</cite></c:if>
+				<c:if test="${isCorrect == 0}"><cite>Pseudo ou mot de passe incorrect</cite></c:if>
 				<form method="POST" action="${pageContext.request.contextPath}/ServletConnection"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
 					<label for="pseudo">Pseudo</label> 

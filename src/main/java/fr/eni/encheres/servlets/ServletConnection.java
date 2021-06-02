@@ -35,26 +35,24 @@ public class ServletConnection extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 
+	//Récupération des champs du formulaire d'inscription
 	String pseudo = request.getParameter("pseudo");
 	String motDePasse = request.getParameter("motDePasse");
-
+	int isCorrect = 0;
+	
+	//Récupération et reconstruction de l'utilisateur depuis la BDD
 	UtilisateurManager utilisateurManager = new UtilisateurManager();
 	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(pseudo, motDePasse);
 	request.setAttribute("user", utilisateur);
-
-	try {
-	    System.out.println("Pseudo : " + utilisateur.getPseudo());
-	    System.out.println("Mot de passe : " + utilisateur.getMotDePasse());
-	} catch (NullPointerException e) {
-	    e.printStackTrace();
-	}
+	request.setAttribute("isCorrect", isCorrect);
 
 	if (utilisateur != null) {
-	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connected.jsp");
-	    rd.forward(request, response);
+	    //Si le constructeur à récupéré toutes les données
+	    response.sendRedirect("home.jsp");
 	} else {
-	    RequestDispatcher rd = request.getRequestDispatcher("/signin.jsp");
-	    rd.forward(request, response);
+	    //Si le constructeur n'a récupéré aucune données
+	    response.sendRedirect("signin.jsp");
+	    isCorrect = 1;
 	}
 
     }

@@ -24,7 +24,8 @@
 		<![endif]-->
 	<div class="container">
 		<div class="row">
-			<div class="col col-md-4-justify-content box">
+			<div class="col col-md-4-justify-content box"
+				style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
 				<h1>Accueil</h1>
 				<a href="signin.jsp">Se connecter - S'inscrire</a>
 			</div>
