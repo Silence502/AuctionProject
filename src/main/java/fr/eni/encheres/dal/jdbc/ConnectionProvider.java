@@ -1,4 +1,4 @@
-package fr.eni.encheres.dal;
+package fr.eni.encheres.dal.jdbc;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,6 +26,9 @@ public abstract class ConnectionProvider {
     }
 
     /**
+     * Cette méthode retourne une connection opérationnelle issue du pool de
+     * connexion vers la base de données.
+     * 
      * @return
      * @throws SQLException
      */
