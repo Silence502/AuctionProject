@@ -14,4 +14,16 @@ public class UtilisateurManager {
     public void addUtilisateur(Utilisateur u) {
 	utilisateurDAO.insert(u);
     }
+    
+    public Utilisateur selectUtilisateur(String pseudo, String mdp) {
+	Utilisateur user = new Utilisateur();
+	user = utilisateurDAO.selectByPseudo(pseudo, mdp);
+	return user;
+    }
+    
+    public Utilisateur selectById(int id) {
+	Utilisateur user = new Utilisateur();
+	user = utilisateurDAO.selectById(id);
+	return user;
+    }
 }

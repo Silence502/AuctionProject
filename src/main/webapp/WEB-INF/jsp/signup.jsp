@@ -24,31 +24,32 @@
 		<![endif]-->
 	<div class="container">
 		<div class="row">
-			<div class="col col-md-4-justify-content box"
+			<div class="col col-md-4-justify-content"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Inscription</h1>
-				<cite>Toutes les mentions sont obligatoires</cite>
-				<form method="POST" action=""
+				
+				<form method="POST" action="${pageContext.request.contextPath}/ServletHomePage"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column">
-					<label for="pseudo">Pseudo</label> <input name="pseudo" type="text"
-						placeholder="pseudo" required="required"> <label for="nom">Nom</label>
+					<label for="pseudo">Pseudo*</label> <input name="pseudo" type="text"
+						placeholder="pseudo" required="required"> <label for="nom">Nom*</label>
 					<input name="nom" type="text" placeholder="nom" required="required">
-					<label for="prenom">Prenom</label> <input name="prenom" type="text"
+					<label for="prenom">Prenom*</label> <input name="prenom" type="text"
 						placeholder="prenom" required="required"> <label
-						for="email">Adresse mail</label> <input name="email" type="email"
+						for="email">Adresse mail*</label> <input name="email" type="email"
 						placeholder="email" required="required"> <label
 						for="telephone">Telephone</label> <input name="telephone"
-						type="tel" placeholder="telephone" required="required"> <label
-						for="rue">Rue</label> <input name="rue" type="text"
+						type="tel" placeholder="telephone"> <label
+						for="rue">Rue*</label> <input name="rue" type="text"
 						placeholder="rue" required="required"> <label
-						for="codePostal">Dode postal</label> <input name="codePostal"
+						for="codePostal">Code postal*</label> <input name="codePostal"
 						type="text" placeholder="code postal" required="required">
-					<label for="ville">Ville</label> <input name="ville" type="text"
+					<label for="ville">Ville*</label> <input name="ville" type="text"
 						placeholder="ville" required="required"> <label
-						for="motDePasse">Mot de passe</label> <input name="motDePasse"
+						for="motDePasse">Mot de passe*</label> <input name="motDePasse"
 						type="password" placeholder="*******" required="required">
+						<cite>* mentions sont obligatoires</cite>
 					<input type="submit" value="Envoyer">
-					<a href="home.jsp">Retour</a>
+					<a href="signin.jsp">Retour</a>
 				</form>
 			</div>
 		</div>

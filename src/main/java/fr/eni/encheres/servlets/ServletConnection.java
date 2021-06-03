@@ -1,6 +1,7 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
@@ -10,12 +11,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ServletHomePage
+ * Servlet implementation class ServletConnection
  */
-@WebServlet(description = "Servlet gérant les requêtes de la page d'accueil", urlPatterns = { "/ServletHomePage" })
-public class ServletHomePage extends HttpServlet {
+@WebServlet("/ServletConnection")
+public class ServletConnection extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -25,7 +27,12 @@ public class ServletHomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 	
-	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
+	HttpSession session = request.getSession(false);
+	
+	if (session != null) {
+	    session.invalidate();
+	}
+	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
 	rd.forward(request, response);
     }
 
@@ -35,34 +42,29 @@ public class ServletHomePage extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	Utilisateur utilisateur = new Utilisateur();
+	HttpSession session = request.getSession();
 	
+	//Récupération des champs du formulaire d'inscription
 	String pseudo = request.getParameter("pseudo");
-	String nom = request.getParameter("nom");
-	String prenom = request.getParameter("prenom");
-	String email = request.getParameter("email");
-	String telephone = request.getParameter("telephone");
-	String rue = request.getParameter("rue");
-	String codePostal = request.getParameter("codePostal");
-	String ville = request.getParameter("ville");
 	String motDePasse = request.getParameter("motDePasse");
+	int isCorrect = 0;
 	
-	utilisateur.setPseudo(pseudo);
-	utilisateur.setNom(nom);
-	utilisateur.setPrenom(prenom);
-	utilisateur.setEmail(email);
-	utilisateur.setTelephone(telephone);
-	utilisateur.setRue(rue);
-	utilisateur.setCodePostal(codePostal);
-	utilisateur.setVille(ville);
-	utilisateur.setMotDePasse(motDePasse);
-	
+	//Récupération et reconstruction de l'utilisateur depuis la BDD
 	UtilisateurManager utilisateurManager = new UtilisateurManager();
-	utilisateurManager.addUtilisateur(utilisateur);
-	
-	System.out.println(utilisateur.toString());
-	
-	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-	rd.forward(request, response);
+	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(pseudo, motDePasse);
+	request.setAttribute("user", utilisateur);
+	request.setAttribute("isCorrect", isCorrect);
+
+	if (utilisateur != null) {
+	    //Si le constructeur à récupéré toutes les données
+	    session.setAttribute("userSession", utilisateur);
+	    response.sendRedirect("home.jsp");
+	} else {
+	    //Si le constructeur n'a récupéré aucune données
+	    response.sendRedirect("signin.jsp");
+	    isCorrect = 1;
+	}
+
     }
+
 }
