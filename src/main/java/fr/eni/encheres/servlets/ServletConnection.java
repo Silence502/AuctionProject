@@ -32,6 +32,7 @@ public class ServletConnection extends HttpServlet {
 		if (session != null) {
 			session.invalidate();
 		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
 		rd.forward(request, response);
 	}
@@ -53,10 +54,10 @@ public class ServletConnection extends HttpServlet {
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		Utilisateur utilisateur = utilisateurManager.selectUtilisateur(pseudo, motDePasse);
 		request.setAttribute("user", utilisateur);
-		request.setAttribute("isCorrect", isCorrect);
 		
 		if (utilisateur != null) {
 			// Si le constructeur à récupéré toutes les données
+			isCorrect = true;
 			session.setAttribute("userSession", utilisateur);
 			response.sendRedirect("home.jsp");
 		} else {
@@ -64,6 +65,7 @@ public class ServletConnection extends HttpServlet {
 			response.sendRedirect("signin.jsp");
 			isCorrect = false;
 			session.setAttribute("isCorrectSession", isCorrect);
+			session.setMaxInactiveInterval(1);
 		}
 
 	}

@@ -36,13 +36,13 @@
 					<label for="prenom">Prenom*</label> <input name="prenom" type="text"
 						placeholder="prenom" required="required"> <label
 						for="email">Adresse mail*</label> <input name="email" type="email"
-						placeholder="email" required="required"> <label
+						placeholder="email" required="required" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> <label
 						for="telephone">Telephone</label> <input name="telephone"
 						type="tel" placeholder="telephone"> <label
 						for="rue">Rue*</label> <input name="rue" type="text"
 						placeholder="rue" required="required"> <label
 						for="codePostal">Code postal*</label> <input name="codePostal"
-						type="text" placeholder="code postal" required="required">
+						type="text" placeholder="code postal" required="required" pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}">
 					<label for="ville">Ville*</label> <input name="ville" type="text"
 						placeholder="ville" required="required"> <label
 						for="motDePasse">Mot de passe*</label> <input name="motDePasse"
