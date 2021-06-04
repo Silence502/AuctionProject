@@ -102,6 +102,17 @@ public class Utilisateur {
     }
     
     /**
+     * @param pseudo
+     * @param email
+     * @param motDePasse
+     * Constructeur dédié à la connexion
+     */
+    public Utilisateur(String pseudo, String email, String motDePasse) {
+	this.pseudo = pseudo;
+	this.email = email;
+	this.motDePasse = motDePasse;
+    }
+    /**
      * @param email
      * Constructeur dédié à la vérification de l'existance d'un utilisateur dans UtilisateurDAOJdbcImpl
      */

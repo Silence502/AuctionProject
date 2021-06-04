@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -30,23 +31,29 @@
 				
 				<form method="POST" action="${pageContext.request.contextPath}/ServletHomePage"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column">
-					<label for="pseudo">Pseudo*</label> <input name="pseudo" type="text"
-						placeholder="pseudo" required="required" pattern="([A-Za-z0-9]+)"> <label for="nom">Nom*</label>
-					<input name="nom" type="text" placeholder="nom" required="required">
-					<label for="prenom">Prenom*</label> <input name="prenom" type="text"
-						placeholder="prenom" required="required"> <label
-						for="email">Adresse mail*</label> <input name="email" type="email"
-						placeholder="email" required="required" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> <label
-						for="telephone">Telephone</label> <input name="telephone"
-						type="tel" placeholder="telephone" pattern="(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}"> <label
-						for="rue">Rue*</label> <input name="rue" type="text"
-						placeholder="rue" required="required"> <label
-						for="codePostal">Code postal*</label> <input name="codePostal"
-						type="text" placeholder="code postal" required="required" pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}">
-					<label for="ville">Ville*</label> <input name="ville" type="text"
-						placeholder="ville" required="required"> <label
-						for="motDePasse">Mot de passe*</label> <input name="motDePasse"
-						type="password" placeholder="*******" required="required">
+					<c:if test="${tooSmall < 4}"><span style="color:red">Le pseudo doit être supérieur à 3 caractères</span></c:if>
+						<label for="pseudo">Pseudo*</label> 
+						<input name="pseudo" type="text"
+						placeholder="pseudo" required pattern="([A-Za-z0-9]+)" maxlength="15" value="${sessionScope.pseudo}"> 
+						<label for="nom">Nom*</label>
+						<input name="nom" type="text" placeholder="nom" required value="${sessionScope.nom}">
+						<label for="prenom">Prenom*</label>
+						<input name="prenom" type="text" placeholder="prenom" required value="${sessionScope.prenom}"> 
+						<label for="email">Adresse mail*</label> 
+						<input name="email" type="email"
+						placeholder="email" required value="${sessionScope.email}" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> 
+						<label for="telephone">Telephone</label> 
+						<input name="telephone"
+						type="tel" placeholder="telephone" value="${sessionScope.telephone}" pattern="(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}"> 
+						<label for="rue">Rue*</label> 
+						<input name="rue" type="text" placeholder="rue" required value="${sessionScope.rue}"> 
+						<label for="codePostal">Code postal*</label> 
+						<input name="codePostal"
+						type="text" placeholder="code postal" required value="${sessionScope.codePostal}" pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}">
+						<label for="ville">Ville*</label> 
+						<input name="ville" type="text" placeholder="ville" required value="${sessionScope.ville}"> 
+						<label for="motDePasse">Mot de passe*</label> 
+						<input name="motDePasse" type="password" placeholder="*******" required>
 						<cite>* mentions sont obligatoires</cite>
 					<input type="submit" value="Envoyer">
 					<a href="signin.jsp">Retour</a>

@@ -14,11 +14,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletHomePage
  */
-@WebServlet(description = "Servlet gérant les requêtes de la page d'accueil et de l'inscription", urlPatterns = { "/ServletHomePage" })
+@WebServlet(description = "Servlet gérant les requêtes de la page d'accueil et de l'inscription", urlPatterns = {
+	"/ServletHomePage" })
 public class ServletHomePage extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -39,9 +41,8 @@ public class ServletHomePage extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
+	HttpSession session = request.getSession();
 	
-
-	String pseudo = request.getParameter("pseudo");
 	String nom = request.getParameter("nom");
 	String prenom = request.getParameter("prenom");
 	String email = request.getParameter("email");
@@ -51,18 +52,35 @@ public class ServletHomePage extends HttpServlet {
 	String ville = request.getParameter("ville");
 	String motDePasse = request.getParameter("motDePasse");
 
-	Utilisateur utilisateur = new Utilisateur(pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse);
-
-	UtilisateurManager utilisateurManager = new UtilisateurManager();
-
-	try {
-	    utilisateurManager.addUtilisateur(utilisateur);
-	} catch (UtilisateurException e) {
-	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/is_exist_error.jsp");
+	String pseudo = request.getParameter("pseudo");
+	if (pseudo.length() < 4) {
+	    int toSmallId = pseudo.length();
+	    request.setAttribute("tooSmall", toSmallId);
+	    session.setAttribute("pseudo", pseudo);
+	    session.setAttribute("nom", nom);
+	    session.setAttribute("prenom", prenom);
+	    session.setAttribute("email", email);
+	    session.setAttribute("telephone", telephone);
+	    session.setAttribute("rue", rue);
+	    session.setAttribute("codePostal", codePostal);
+	    session.setAttribute("ville", ville);
+	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 	    rd.forward(request, response);
+	} else {
+	    Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+		    motDePasse);
+	    UtilisateurManager utilisateurManager = new UtilisateurManager();
+	    session.invalidate();
+	    try {
+		utilisateurManager.addUtilisateur(utilisateur);
+		RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+		rd.forward(request, response);
+	    } catch (UtilisateurException e) {
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/is_exist_error.jsp");
+		rd.forward(request, response);
+	    }
 	}
 
-	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-	rd.forward(request, response);
+	
     }
 }

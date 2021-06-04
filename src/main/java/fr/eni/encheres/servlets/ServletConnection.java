@@ -45,13 +45,13 @@ public class ServletConnection extends HttpServlet {
 	HttpSession session = request.getSession();
 
 	// Récupération des champs du formulaire d'inscription
-	String pseudo = request.getParameter("pseudo");
+	String id = request.getParameter("id");
 	String motDePasse = request.getParameter("motDePasse");
 	boolean isCorrect = true;
 
 	// Récupération et reconstruction de l'utilisateur depuis la BDD
 	UtilisateurManager utilisateurManager = new UtilisateurManager();
-	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(pseudo, motDePasse);
+	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(id, motDePasse);
 	request.setAttribute("user", utilisateur);
 
 	if (utilisateur != null) {

@@ -17,7 +17,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     private Utilisateur utilisateur;
     private final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,0,0)";
     private final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
-    private final String SELECT_BY_PS = "SELECT * FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?";
+    private final String SELECT_BY_PS = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=? AND mot_de_passe=?";
     private final String SELECT_CHECK = "SELECT pseudo, email FROM UTILISATEURS WHERE pseudo=? OR email=?";
 
     PreparedStatement stmt = null;
@@ -80,6 +80,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
     }
 
+    /**
+     *Selection d'un utilisateur via son identifiant dans la BDD
+     */
     @Override
     public Utilisateur selectById(int id) {
 	try (Connection con = ConnectionProvider.getConnection()) {
@@ -99,18 +102,20 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	return utilisateur;
     }
 
+    /**
+     *Sélection d'un utilisateur via son pseudo/email et son mot de passe
+     */
     @Override
-    public Utilisateur selectByPseudo(String pseudo, String mdp) {
+    public Utilisateur selectByPseudo(String id, String mdp) {
 	try (Connection con = ConnectionProvider.getConnection()) {
 	    stmt = con.prepareStatement(SELECT_BY_PS);
-	    stmt.setString(1, pseudo);
-	    stmt.setString(2, mdp);
+	    stmt.setString(1, id);
+	    stmt.setString(2, id);
+	    stmt.setString(3, mdp);
 	    ResultSet rs = stmt.executeQuery();
 	    if (rs.next()) {
-		utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"),
-			rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
-			rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-			rs.getInt("credit"));
+		utilisateur = new Utilisateur(rs.getString("pseudo"),
+			rs.getString("email"),rs.getString("mot_de_passe"));
 	    }
 	    stmt.close();
 	} catch (SQLException e) {
