@@ -25,8 +25,6 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
     public List<Categorie> selectAll() throws BusinessException {
 	
     	List<Categorie> categories = new ArrayList<>();
-    	int num;
-    	String cat;
     	
 	try (Connection cnx = ConnectionProvider.getConnection()) {
 	    
@@ -34,9 +32,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 		ResultSet rs = stmt.executeQuery(SELECT_ALL);
 		
 		while (rs.next()) {
-		num = rs.getInt("no_categorie");
-		cat = rs.getString("libelle");
-		categories.add(new Categorie (num, cat));
+		categories.add(new Categorie (rs.getInt("no_categorie"), rs.getString("libelle")));
 		}
 		}
 	

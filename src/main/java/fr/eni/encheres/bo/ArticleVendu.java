@@ -15,6 +15,7 @@ public class ArticleVendu implements Serializable {
 	private EtatVente etatVente;
 	private Retrait lieuRetrait;
 	private Categorie categorieArticle;
+	private int noUtilisateur;
 	
 	
 	public ArticleVendu() {
@@ -60,6 +61,19 @@ public class ArticleVendu implements Serializable {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.categorieArticle = categorieArticle;
+	}
+	
+	
+
+
+	public ArticleVendu(String nomArticle, String description, LocalDate dateFinEncheres, int prixVente,
+			int noUtilisateur) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixVente = prixVente;
+		this.noUtilisateur = noUtilisateur;
 	}
 
 
@@ -160,6 +174,13 @@ public class ArticleVendu implements Serializable {
 
 	public void setCategorieArticle(Categorie categorieArticle) {
 		this.categorieArticle = categorieArticle;
+	}
+
+
+	@Override
+	public String toString() {
+		return "ArticleVendu [nomArticle=" + nomArticle + ", description=" + description + ", dateFinEncheres="
+				+ dateFinEncheres + ", prixVente=" + prixVente + ", noUtilisateur=" + noUtilisateur + "]";
 	}
 	
 	
