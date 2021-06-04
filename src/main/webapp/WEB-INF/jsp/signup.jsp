@@ -27,7 +27,7 @@
 			<div class="col col-md-4-justify-content"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Inscription</h1>
-				
+
 				<form method="POST" action="${pageContext.request.contextPath}/ServletHomePage"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column">
 					<label for="pseudo">Pseudo*</label> <input name="pseudo" type="text"

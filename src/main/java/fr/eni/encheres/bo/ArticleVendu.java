@@ -32,6 +32,36 @@ public class ArticleVendu implements Serializable {
 		this.miseAPrix = miseAPrix;
 	}
 
+	
+	
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente, Retrait lieuRetrait,
+			Categorie categorieArticle) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.etatVente = etatVente;
+		this.lieuRetrait = lieuRetrait;
+		this.categorieArticle = categorieArticle;
+	}
+
+
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, Categorie categorieArticle) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.categorieArticle = categorieArticle;
+	}
+
 
 	public int getNoArticle() {
 		return noArticle;
@@ -110,6 +140,26 @@ public class ArticleVendu implements Serializable {
 
 	public void setEtatVente(EtatVente etatVente) {
 		this.etatVente = etatVente;
+	}
+
+
+	public Retrait getLieuRetrait() {
+		return lieuRetrait;
+	}
+
+
+	public void setLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
+	}
+
+
+	public Categorie getCategorieArticle() {
+		return categorieArticle;
+	}
+
+
+	public void setCategorieArticle(Categorie categorieArticle) {
+		this.categorieArticle = categorieArticle;
 	}
 	
 	

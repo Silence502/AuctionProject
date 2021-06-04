@@ -24,8 +24,8 @@
 		if(articleVendu!=null)
 		{
 	%>
-			<p style="color:red;">L'article a été ajouté avec succès :</p>
-			<p><%=articleVendu %></p>
+			<p style="color:red;">L'article suivant a été ajouté avec succès :</p>
+			<p><%=articleVendu.getNomArticle()%> <%= articleVendu.getDescription() %></p>
 	<%	
 		} 
 	%>
@@ -51,10 +51,15 @@
 		<label for="idDescription">Description : </label><input type="texte" id="idDescription" name="description" value="<%=listeCodesErreur!=null?request.getParameter("description"):""%>"/>
 		<br/>
 		<label for="idCategorie">Catégorie : </label> <select id="idCategorie" name="categorie">
-											<option value="HIGH-TECH"> HIGH-TECH </option>
-											<option value="MAISON"> MAISON </option>
-											<option value="JARDIN"> JARDIN </option>
-											<option value="AUTO-MOTO"> AUTO-MOTO </option>
+		
+		
+		<%	List<String> listeCategories = (List<String>) request.getAttribute("listeCategories");
+		if(listeCategories!=null) {
+		for (String cat : listeCategories) { %>
+		
+		
+											<option value=<%= cat%>> <%= cat%> </option>
+		<%}} %>
 											</select>
 		<br/>
 		<label for="idDateDebut">Date de début : </label><input type="date" id="idDateDebut" name="date_debut" value="<%=listeCodesErreur!=null?request.getParameter("date_debut"):""%>"/>

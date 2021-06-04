@@ -13,7 +13,7 @@ import fr.eni.encheres.dal.ConnectionProvider;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
-    private static final String INSERT = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente) VALUES(?,?,?,?,?,?);";
+    private static final String INSERT = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) VALUES(?,?,?,?,?,1,?);";
 
     @Override
     public void insert(ArticleVendu article) throws BusinessException {
@@ -30,7 +30,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	    pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
 	    pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 	    pstmt.setInt(5, article.getMiseAPrix());
-	    pstmt.setInt(6, article.getPrixVente());
+	    pstmt.setInt(6, article.getCategorieArticle().getNoCategorie());
 	    pstmt.executeUpdate();
 	    ResultSet rs = pstmt.getGeneratedKeys();
 	    if (rs.next()) {

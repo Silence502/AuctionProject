@@ -20,5 +20,10 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int INSERT_ARTICLE_VENDU_ECHEC=10002;
 	
+	/**
+	 * Echec de la selection de toutes les catégories
+	 */
+	public static final int SELECT_ALL_CATEGORIE_ECHEC=10002;
+	
 	
 }
