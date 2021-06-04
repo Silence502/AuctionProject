@@ -36,7 +36,7 @@
 					<label for="prenom">Prenom*</label> <input name="prenom" type="text"
 						placeholder="prenom" required="required"> <label
 						for="email">Adresse mail*</label> <input name="email" type="email"
-						placeholder="email" required="required" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> <label
+						placeholder="email" required="required" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@gmail?.([A-Za-z]{2,})"> <label
 						for="telephone">Telephone</label> <input name="telephone"
 						type="tel" placeholder="telephone"> <label
 						for="rue">Rue*</label> <input name="rue" type="text"

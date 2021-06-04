@@ -1,7 +1,6 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
@@ -18,56 +17,56 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebServlet("/ServletConnection")
 public class ServletConnection extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
 
-		HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);
 
-		if (session != null) {
-			session.invalidate();
-		}
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-		rd.forward(request, response);
+	if (session != null) {
+	    session.invalidate();
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
+	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+	rd.forward(request, response);
+    }
 
-		// Récupération des champs du formulaire d'inscription
-		String pseudo = request.getParameter("pseudo");
-		String motDePasse = request.getParameter("motDePasse");
-		boolean isCorrect = true;
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+	HttpSession session = request.getSession();
 
-		// Récupération et reconstruction de l'utilisateur depuis la BDD
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		Utilisateur utilisateur = utilisateurManager.selectUtilisateur(pseudo, motDePasse);
-		request.setAttribute("user", utilisateur);
-		
-		if (utilisateur != null) {
-			// Si le constructeur à récupéré toutes les données
-			isCorrect = true;
-			session.setAttribute("userSession", utilisateur);
-			response.sendRedirect("home.jsp");
-		} else {
-			// Si le constructeur n'a récupéré aucune données
-			response.sendRedirect("signin.jsp");
-			isCorrect = false;
-			session.setAttribute("isCorrectSession", isCorrect);
-			session.setMaxInactiveInterval(1);
-		}
+	// Récupération des champs du formulaire d'inscription
+	String pseudo = request.getParameter("pseudo");
+	String motDePasse = request.getParameter("motDePasse");
+	boolean isCorrect = true;
 
+	// Récupération et reconstruction de l'utilisateur depuis la BDD
+	UtilisateurManager utilisateurManager = new UtilisateurManager();
+	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(pseudo, motDePasse);
+	request.setAttribute("user", utilisateur);
+
+	if (utilisateur != null) {
+	    // Si le constructeur à récupéré toutes les données
+	    isCorrect = true;
+	    session.setAttribute("userSession", utilisateur);
+	    response.sendRedirect("home.jsp");
+	} else {
+	    // Si le constructeur n'a récupéré aucune données
+	    response.sendRedirect("signin.jsp");
+	    isCorrect = false;
+	    session.setAttribute("isCorrectSession", isCorrect);
+	    session.setMaxInactiveInterval(1);
 	}
+
+    }
 
 }

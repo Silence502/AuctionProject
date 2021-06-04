@@ -100,6 +100,14 @@ public class Utilisateur {
 	this.credit = credit;
 	this.administrateur = administrateur;
     }
+    
+    /**
+     * @param email
+     * Constructeur dédié à la vérification de l'existance d'un utilisateur dans UtilisateurDAOJdbcImpl
+     */
+    public Utilisateur(String email) {
+	this.email = email;
+    }
     /**
      * Getter de noUtilisateur
      * @return noUtilisateur
