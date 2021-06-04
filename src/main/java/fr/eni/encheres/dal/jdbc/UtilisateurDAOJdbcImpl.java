@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
-import fr.eni.encheres.UserAlreadyExistException;
+import fr.eni.encheres.UtilisateurException;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.UtilisateurDAO;
@@ -18,44 +18,65 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     private final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,0,0)";
     private final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
     private final String SELECT_BY_PS = "SELECT * FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?";
-    //private final String SELECT_CHECK = "SELECT pseudo, email FROM UTILISATEURS WHERE pseudo=? AND email=?";
+    private final String SELECT_CHECK = "SELECT pseudo, email FROM UTILISATEURS WHERE pseudo=? OR email=?";
 
     PreparedStatement stmt = null;
     PreparedStatement stmtCheck = null;
     BusinessException businessException = new BusinessException();
 
-    @Override
-    public void insert(Utilisateur utilisateur) throws UserAlreadyExistException {
-	Utilisateur utilisateurBis = null;
+    public void insert(Utilisateur utilisateur) throws UtilisateurException {
+	Utilisateur userCheck = null;
 	try (Connection con = ConnectionProvider.getConnection()) {
 	    // Préparation d'un insert et d'un select
-	    stmtCheck = con.prepareStatement("SELECT pseudo FROM UTILISATEURS WHERE pseudo = ?");
 	    stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-	    // Récupération des données saisie dans l'insert
-	    stmt.setString(1, utilisateur.getPseudo());
-	    stmtCheck.setString(1, utilisateur.getPseudo());
-	    stmtCheck.executeQuery();
-	    ResultSet rst = stmtCheck.executeQuery();
-	    if (rst.next()) {
-		utilisateurBis
-	    }
-	    stmt.setString(2, utilisateur.getNom());
+	    stmtCheck = con.prepareStatement(SELECT_CHECK);
+	    // Récupération des données saisie pour l'insert
+	    stmt.setString(1, utilisateur.getPseudo().trim());
+	    stmt.setString(2, utilisateur.getNom().toUpperCase());
 	    stmt.setString(3, utilisateur.getPrenom());
-	    stmt.setString(4, utilisateur.getEmail());
+	    stmt.setString(4, utilisateur.getEmail().toLowerCase().trim());
 	    stmt.setString(5, utilisateur.getTelephone());
 	    stmt.setString(6, utilisateur.getRue());
-	    stmt.setString(7, utilisateur.getCodePostal());
+	    stmt.setString(7, utilisateur.getCodePostal().trim());
 	    stmt.setString(8, utilisateur.getVille());
 	    stmt.setString(9, utilisateur.getMotDePasse());
-	    stmt.execute();
-	    ResultSet rs = stmt.getGeneratedKeys();
-	    if (rs.next()) {
-		utilisateur.setNoUtilisateur(1);
+	    // Récupération du pseudo et de l'email saisie pour le select
+	    stmtCheck.setString(1, utilisateur.getPseudo());
+	    stmtCheck.setString(2, utilisateur.getEmail());
+	    // Exécution de la requête select et stockage dans le ResultSet
+	    ResultSet rsCheck = stmtCheck.executeQuery();
+	    if (rsCheck.next()) {// L'email et le pseudo étant uniquent le curseur ne se placera que sur l'unique
+				 // ligne générée
+		// Construction d'un utilisateur avec seulement le pseudo et l'email s'ils a ont
+		// été trouvé dans la BDD
+		// avec la requête select sinon il sera juste null
+		userCheck = new Utilisateur(rsCheck.getString("pseudo"), rsCheck.getString("email"));
 	    }
-	    stmt.close();
-
+	    try {
+		// Comparaison du pseudo et de l'email saisie avec le pseudo et l'email
+		// selectionné dans la BDD
+		if (utilisateur.getEmail().equalsIgnoreCase(userCheck.getEmail())
+			|| utilisateur.getPseudo().equalsIgnoreCase(userCheck.getPseudo())) {
+		    // S'il y a une correspondance on ferme tout.../...
+		    stmt.close();
+		    stmtCheck.close();
+		    // .../...et on propage l'exception jusqu'à la servlet chargée de gérer
+		    // l'inscription (ServletHomePage)
+		    throw new UtilisateurException("Un utilisateur est déjà enregistré avec ce pseudo ou cet email");
+		}
+	    } catch (NullPointerException e) {
+		// S'il n'y a pas de correspondance on ferme le select et on exécute l'insert
+		// avant fermeture
+		stmtCheck.close();
+		stmt.execute();
+		ResultSet rs = stmt.getGeneratedKeys();
+		if (rs.next()) {
+		    utilisateur.setNoUtilisateur(1);
+		}
+		stmt.close();
+	    }
 	} catch (SQLException e) {
-	    e.printStackTrace();
+	    throw new UtilisateurException("L'insertion à échoué " + e);
 	}
     }
 

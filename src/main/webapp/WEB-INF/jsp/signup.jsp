@@ -31,14 +31,14 @@
 				<form method="POST" action="${pageContext.request.contextPath}/ServletHomePage"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column">
 					<label for="pseudo">Pseudo*</label> <input name="pseudo" type="text"
-						placeholder="pseudo" required="required"> <label for="nom">Nom*</label>
+						placeholder="pseudo" required="required" pattern="([A-Za-z0-9]+)"> <label for="nom">Nom*</label>
 					<input name="nom" type="text" placeholder="nom" required="required">
 					<label for="prenom">Prenom*</label> <input name="prenom" type="text"
 						placeholder="prenom" required="required"> <label
 						for="email">Adresse mail*</label> <input name="email" type="email"
-						placeholder="email" required="required" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@gmail?.([A-Za-z]{2,})"> <label
+						placeholder="email" required="required" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> <label
 						for="telephone">Telephone</label> <input name="telephone"
-						type="tel" placeholder="telephone"> <label
+						type="tel" placeholder="telephone" pattern="(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}"> <label
 						for="rue">Rue*</label> <input name="rue" type="text"
 						placeholder="rue" required="required"> <label
 						for="codePostal">Code postal*</label> <input name="codePostal"

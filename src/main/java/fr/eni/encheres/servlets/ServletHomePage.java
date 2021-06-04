@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import fr.eni.encheres.BusinessException;
-import fr.eni.encheres.UserAlreadyExistException;
+import fr.eni.encheres.UtilisateurException;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.CodesResultatDAL;
@@ -57,17 +57,12 @@ public class ServletHomePage extends HttpServlet {
 
 	try {
 	    utilisateurManager.addUtilisateur(utilisateur);
-	    if (utilisateurManager != null) {
-		RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-		rd.forward(request, response);
-	    }
-	} catch (UserAlreadyExistException e) {
-	    e.printStackTrace();
-	    System.err.println(e);
+	} catch (UtilisateurException e) {
 	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/is_exist_error.jsp");
 	    rd.forward(request, response);
 	}
 
-	
+	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+	rd.forward(request, response);
     }
 }
