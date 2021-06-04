@@ -32,6 +32,12 @@
 				<form method="POST" action="${pageContext.request.contextPath}/ServletHomePage"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column">
 					<c:if test="${tooSmall < 4}"><span style="color:red">Le pseudo doit être supérieur à 3 caractères</span></c:if>
+					<c:if test="${alreadyExistsSession == false}">
+						<div style="width:400px;text-align:center;" class="elert alert-warning" role="alert">
+							<span style="color:red">Les identifiants correspondent à un utilisateur enregistré.</span>
+							<span style="color:red">Vérifiez que vous ne possédez pas déjà un compte ou réessayez avec un autre email ou pseudo.</span>	
+						</div>					
+					</c:if>
 						<label for="pseudo">Pseudo*</label> 
 						<input name="pseudo" type="text"
 						placeholder="pseudo" required pattern="([A-Za-z0-9]+)" maxlength="15" value="${sessionScope.pseudo}"> 
