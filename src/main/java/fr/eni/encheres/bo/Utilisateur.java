@@ -105,7 +105,8 @@ public class Utilisateur {
      * @param email
      * Constructeur dédié à la vérification de l'existance d'un utilisateur dans UtilisateurDAOJdbcImpl
      */
-    public Utilisateur(String email) {
+    public Utilisateur(String pseudo, String email) {
+	this.pseudo = pseudo;
 	this.email = email;
     }
     /**

@@ -1,6 +1,6 @@
 package fr.eni.encheres.bll;
 
-import fr.eni.encheres.BusinessException;
+import fr.eni.encheres.UserAlreadyExistException;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateurDAO;
@@ -12,7 +12,7 @@ public class UtilisateurManager {
 	utilisateurDAO = DAOFactory.getUtilisateurDAO();
     }
     
-    public void addUtilisateur(Utilisateur u) throws BusinessException {
+    public void addUtilisateur(Utilisateur u) throws UserAlreadyExistException {
 	utilisateurDAO.insert(u);
     }
     
