@@ -24,6 +24,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     PreparedStatement stmtCheck = null;
     BusinessException businessException = new BusinessException();
 
+    /**
+     * @parama utilisateur
+     * Méthode permetant l'insertion et donc l'inscription d'un utilisateur.
+     */
+    @Override
     public void insert(Utilisateur utilisateur) throws UtilisateurException {
 	Utilisateur userCheck = null;
 	try (Connection con = ConnectionProvider.getConnection()) {
@@ -81,7 +86,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     }
 
     /**
-     *Selection d'un utilisateur via son identifiant dans la BDD
+     * @param id
+     * Selection d'un utilisateur via son identifiant dans la BDD prenant en paramètre un entier.
      */
     @Override
     public Utilisateur selectById(int id) {
@@ -103,12 +109,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     }
 
     /**
-     *Sélection d'un utilisateur via son pseudo/email et son mot de passe
+     * @param id
+     * @param mdp
+     * Sélection d'un utilisateur via son pseudo/email et son mot de passe.
+     * Prend en paramètre deux chaînes de caractères.
      */
     @Override
     public Utilisateur selectByPseudo(String id, String mdp) {
 	try (Connection con = ConnectionProvider.getConnection()) {
 	    stmt = con.prepareStatement(SELECT_BY_PS);
+	    // Récupération du pseudo et l'email dans la même variable de sorte que
+	    // quoi que l'utilisateur saisisse (email ou pseudo) il peut se connecter
 	    stmt.setString(1, id);
 	    stmt.setString(2, id);
 	    stmt.setString(3, mdp);

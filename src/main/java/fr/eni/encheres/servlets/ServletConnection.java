@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/ServletConnection")
 public class ServletConnection extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private final boolean IS_NOT_CORRECT = false;
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -25,13 +26,13 @@ public class ServletConnection extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-
-	HttpSession session = request.getSession(false);
-
+	// Obtention de la session en cours
+	HttpSession session = request.getSession();
+	// Si une session existe bel et bien on déconnecte
 	if (session != null) {
 	    session.invalidate();
 	}
-
+	// Retour à la page d'accueil
 	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
 	rd.forward(request, response);
     }
@@ -47,26 +48,20 @@ public class ServletConnection extends HttpServlet {
 	// Récupération des champs du formulaire d'inscription
 	String id = request.getParameter("id");
 	String motDePasse = request.getParameter("motDePasse");
-	boolean isCorrect = true;
 
 	// Récupération et reconstruction de l'utilisateur depuis la BDD
 	UtilisateurManager utilisateurManager = new UtilisateurManager();
 	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(id, motDePasse);
-	request.setAttribute("user", utilisateur);
 
 	if (utilisateur != null) {
 	    // Si le constructeur à récupéré toutes les données
-	    isCorrect = true;
 	    session.setAttribute("userSession", utilisateur);
 	    response.sendRedirect("home.jsp");
 	} else {
 	    // Si le constructeur n'a récupéré aucune données
 	    response.sendRedirect("signin.jsp");
-	    isCorrect = false;
-	    session.setAttribute("isCorrectSession", isCorrect);
+	    session.setAttribute("connected", IS_NOT_CORRECT);
 	    session.setMaxInactiveInterval(1);
 	}
-
     }
-
 }

@@ -28,13 +28,12 @@
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-5-justify-content">
-				<div class="elert alert-warning" role="alert" 
+				<div class="elert alert-success" role="alert" 
 					style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-top: 20%; text-align: center;">
-					<h3>! Attention !</h3>
-					<p style="margin:10px">L'adresse email ou le pseudo correspondent à un utilisateur enregistré, vérifier que vous ne
-						possédez pas déjà un compte ou réessayez avec un autre pseudo ou email.</p>
+					<h3>! Félicitation !</h3>
+					<p style="margin:10px">Vous êtes désormais inscrit sur ENI-Enchère. Cliquez sur retour pour revenir à la page d'accueil est vous connecter avec vos identifiants.</p>
 					<form method="GET"
-						action="${pageContext.request.contextPath}/ServletHomePage">
+						action="home.jsp">
 						<input type="submit" value="Retour" style="margin:10px;">
 					</form>
 				</div>
