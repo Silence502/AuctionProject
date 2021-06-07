@@ -27,8 +27,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     BusinessException businessException = new BusinessException();
 
     /**
-     * @parama utilisateur
-     * Méthode permetant l'insertion et donc l'inscription d'un utilisateur.
+     * @parama utilisateur Méthode permetant l'insertion et donc l'inscription d'un
+     *         utilisateur.
      */
     @Override
     public void insert(Utilisateur utilisateur) throws UtilisateurException {
@@ -87,8 +87,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     }
 
     /**
-     * @param id
-     * Selection d'un utilisateur via son identifiant dans la BDD prenant en paramètre un entier.
+     * @param id Selection d'un utilisateur via son identifiant dans la BDD prenant
+     *           en paramètre un entier.
      */
     @Override
     public Utilisateur selectById(int id) {
@@ -111,9 +111,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
     /**
      * @param id
-     * @param mdp
-     * Sélection d'un utilisateur via son pseudo/email et son mot de passe.
-     * Prend en paramètre deux chaînes de caractères.
+     * @param mdp Sélection d'un utilisateur via son pseudo/email et son mot de
+     *            passe. Prend en paramètre deux chaînes de caractères.
      */
     @Override
     public Utilisateur selectByPseudo(String id, String mdp) {
@@ -126,8 +125,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    stmt.setString(3, mdp);
 	    ResultSet rs = stmt.executeQuery();
 	    if (rs.next()) {
-		utilisateur = new Utilisateur(rs.getString("pseudo"),
-			rs.getString("email"),rs.getString("mot_de_passe"));
+		utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"),
+			rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"));
 	    }
 	    stmt.close();
 	} catch (SQLException e) {
@@ -147,9 +146,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    while (rs.next()) {
 		// On reconstruit l'utilisateur
 		utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"),
-			rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
-			rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-			rs.getInt("credit"));
+			rs.getString("email"), rs.getString("telephone").toString().trim(), rs.getString("rue"),
+			rs.getString("code_postal"), rs.getString("ville"));
 		// Et on l'ajoute à la liste
 		list.add(utilisateur);
 	    }
@@ -167,7 +165,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
     @Override
     public void delete(int id) {
-	
+
     }
 
 }

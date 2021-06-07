@@ -23,8 +23,8 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
-	version 0.070621mv
-	<p>Session numéro : ${pageContext.session.id}</p>
+	
+	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-4-justify-content box"
@@ -36,12 +36,9 @@
 				</c:if>
 				<c:if test="${!empty userSession}">
 					<a href="${pageContext.request.contextPath}/ServletConnection">Se déconnecter</a>
-					<form action="">
-						<input type="submit" value="Liste des membres">
-					</form>
 					<a href="${pageContext.request.contextPath}/ServletMembersList">Liste des membres</a>
-					<a href="#">Mon profil</a>
-					<p>Session ouverte</p>
+					<a href="${pageContext.request.contextPath}/ServletProfileManager">Mon profil</a>
+					<p>Session ouverte : ${sessionScope.userSession}</p>
 				</c:if>
 			</div>
 		</div>

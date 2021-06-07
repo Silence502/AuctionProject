@@ -20,7 +20,7 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
-	<p>Session numéro : ${pageContext.session.id}</p>
+	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-4-justify-content box"
@@ -38,7 +38,6 @@
 							style="margin-bottom: 15px;">
 					<input type="submit"
 						value="Connexion">
-					<input type="hidden" name="sessionid" value="${pageContext.session.id}0${sessionScope.pseudo}">
 				</form>
 				<form method="GET"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column"

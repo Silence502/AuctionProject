@@ -51,11 +51,23 @@ public class ServletConnection extends HttpServlet {
 	// Récupération et reconstruction de l'utilisateur depuis la BDD
 	UtilisateurManager utilisateurManager = new UtilisateurManager();
 	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(id, motDePasse);
-
+	
+	
 	if (utilisateur != null) {
 	    // Si le constructeur à récupéré toutes les données
+//	    Utilisateur userProfile = new Utilisateur(utilisateur.getPseudo(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), utilisateur.getTelephone(),
+//		    utilisateur.getRue(), utilisateur.getCodePostal(), utilisateur.getVille(), utilisateur.getMotDePasse(), utilisateur.getCredit());
 	    HttpSession session = request.getSession();
-	    session.setAttribute("userSession", utilisateur);
+	    session.setAttribute("userSession", utilisateur.getPseudo());
+	    session.setAttribute("nomSession", utilisateur.getNom());
+	    session.setAttribute("prenomSession", utilisateur.getPrenom());
+	    session.setAttribute("emailSession", utilisateur.getEmail());
+	    session.setAttribute("telSession", utilisateur.getTelephone());
+	    session.setAttribute("rueSession", utilisateur.getRue());
+	    session.setAttribute("cpSession", utilisateur.getCodePostal());
+	    session.setAttribute("villeSession", utilisateur.getVille());
+	    session.setAttribute("mdpSession", utilisateur.getMotDePasse());
+	    request.setAttribute("test", utilisateur.toString());
 	    response.sendRedirect("home.jsp");
 	} else {
 	    // Si le constructeur n'a récupéré aucune données

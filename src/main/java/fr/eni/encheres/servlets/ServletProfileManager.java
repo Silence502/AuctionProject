@@ -1,10 +1,7 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
-import java.util.List;
 
-import fr.eni.encheres.bll.UtilisateurManager;
-import fr.eni.encheres.bo.Utilisateur;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,10 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletMembersList
+ * Servlet implementation class ServletProfileManager
  */
-@WebServlet("/ServletMembersList")
-public class ServletMembersList extends HttpServlet {
+@WebServlet("/ServletProfileManager")
+public class ServletProfileManager extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -25,14 +22,7 @@ public class ServletMembersList extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	UtilisateurManager utilisateurMananger = new UtilisateurManager();
-	List<Utilisateur> utilisateurs = utilisateurMananger.getUtilisateur();
-	request.setAttribute("userList", utilisateurs);
-	System.out.println(utilisateurs.size());
-	
-	
-	
-	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/membersList.jsp");
+	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp");
 	rd.forward(request, response);
     }
 
@@ -42,9 +32,7 @@ public class ServletMembersList extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	RequestDispatcher rd = request.getRequestDispatcher("/membersList.jsp");
-	rd.forward(request, response);
-	
+	doGet(request, response);
     }
 
 }

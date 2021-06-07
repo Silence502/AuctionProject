@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -27,38 +26,54 @@
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-12">
-				<h1>Liste des membres</h1>
+				<h1>Profil</h1>
 				<hr>
-				<p><strong>Connecté :</strong> ${sessionScope.userSession}  (<a href="${pageContext.request.contextPath}/ServletProfileManager">Voir profil</a>) | <a href="home.jsp">Retour à l'accueil</a></p>
+				<p>
+					<strong>Connecté :</strong> ${sessionScope.userSession} | <a href="home.jsp">Retour à l'accueil</a>
+				</p>
 				<hr>
-
-				<p>Membres inscrits : ${userList.size()}</p>
-
-				<table class="table">
-					<thead class="thead-dark">
+				<h3>Modifer mon profil</h3>
+				<form action="">
+				<table>
+					<thead>
 						<tr>
-							<th scope="col">Pseudo</th>
-							<th scope="col">Nom</th>
-							<th scope="col">Prénom</th>
-							<th scope="col">Email</th>
-							<th scope="col">Téléphone</th>
-							<th scope="col">Adresse</th>
+							<th colspan="7">Données du profil</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="member" items="${userList}">
-							<tr>
-								<td scope="row">${member.pseudo}</td>
-								<td>${member.nom}</td>
-								<td>${member.prenom}</td>
-								<td>${member.email}</td>
-								<td>${member.telephone}</td>
-								<td>${member.rue}, ${member.codePostal}
-								${member.ville}</td>
-							</tr>
-						</c:forEach>
+						<tr>
+							<th>Pseudo :</th>
+							<td>${sessionScope.userSession}</td>
+						</tr>
+						<tr>
+							<th>Nom :</th>
+							<td>${sessionScope.nomSession}</td>
+						</tr>
+						<tr>
+							<th>Prénom :</th>
+							<td>${sessionScope.prenomSession}</td>
+						</tr>
+						<tr>
+							<th>Email :</th>
+							<td>${sessionScope.emailSession}</td>
+						</tr>
+						<tr>
+							<th>Téléphone :</th>
+							<td>${sessionScope.telSession}</td>
+						</tr>
+						<tr>
+							<th>Adresse :</th>
+							<td>${sessionScope.rueSession}</td>
+						
+						</tr>
+						<tr>
+							<th>Mot de passe :</th>
+							<td><input type="password" placeholder="******"></td>
+						</tr>
 					</tbody>
 				</table>
+					<input type="submit" value="Valider">
+				</form>
 			</div>
 		</div>
 	</div>
