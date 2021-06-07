@@ -21,20 +21,13 @@
 	
 	<%
 		List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur");
-		if(listeCodesErreur!=null)
-		{
+
 	%>
-			<p style="color:red;">Erreur, l'article n'a pas pu être ajouté :</p>
-	<%
-			for(int codeErreur:listeCodesErreur)
-			{
-	%>
-				<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
-	<%	
-			}
-		}
-	%>
+	
 	<form action="<%=request.getContextPath()%>/ServletListeArticles" method="post">
+		<fieldset>
+		<label for="idRecherche"></label><input type="texte" id="idRecherche" name="recherche" value="<%=listeCodesErreur!=null?request.getParameter("recherche"):""%>"/>
+		</fieldset>
 		
 		<% 
 		List<ArticleVendu> listeArticles = (List<ArticleVendu>) request.getAttribute("selectionArticles");
