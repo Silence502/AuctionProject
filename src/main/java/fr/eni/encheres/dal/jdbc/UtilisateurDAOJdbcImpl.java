@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
@@ -19,6 +20,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     private final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
     private final String SELECT_BY_PS = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=? AND mot_de_passe=?";
     private final String SELECT_CHECK = "SELECT pseudo, email FROM UTILISATEURS WHERE pseudo=? OR email=?";
+    private final String SELECT_ALL = "SELECT * FROM UTILISATEURS";
 
     PreparedStatement stmt = null;
     PreparedStatement stmtCheck = null;
@@ -52,9 +54,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    ResultSet rsCheck = stmtCheck.executeQuery();
 	    if (rsCheck.next()) {// L'email et le pseudo étant uniquent le curseur ne se placera que sur l'unique
 				 // ligne générée
-		// Construction d'un utilisateur avec seulement le pseudo et l'email s'ils a ont
-		// été trouvé dans la BDD
-		// avec la requête select sinon il sera juste null
+		// Construction d'un utilisateur avec seulement le pseudo et l'email s'ils ont
+		// été trouvé dans la BDD avec la requête select sinon il sera juste null
 		userCheck = new Utilisateur(rsCheck.getString("pseudo"), rsCheck.getString("email"));
 	    }
 	    try {
@@ -137,7 +138,26 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
     @Override
     public List<Utilisateur> selectAll() {
-	return null;
+	List<Utilisateur> list = new ArrayList<Utilisateur>();
+	try (Connection con = ConnectionProvider.getConnection()) {
+	    // On prépare la requête
+	    stmt = con.prepareStatement(SELECT_ALL);
+	    ResultSet rs = stmt.executeQuery();
+	    // Tant qu'il existe une ligne suivante
+	    while (rs.next()) {
+		// On reconstruit l'utilisateur
+		utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"),
+			rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+			rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+			rs.getInt("credit"));
+		// Et on l'ajoute à la liste
+		list.add(utilisateur);
+	    }
+	    stmt.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	return list;
     }
 
     @Override
@@ -147,7 +167,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
     @Override
     public void delete(int id) {
-
+	
     }
 
 }

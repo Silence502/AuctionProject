@@ -43,8 +43,7 @@ public class ServletConnection extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	HttpSession session = request.getSession();
-
+	
 	// Récupération des champs du formulaire d'inscription
 	String id = request.getParameter("id");
 	String motDePasse = request.getParameter("motDePasse");
@@ -55,10 +54,12 @@ public class ServletConnection extends HttpServlet {
 
 	if (utilisateur != null) {
 	    // Si le constructeur à récupéré toutes les données
+	    HttpSession session = request.getSession();
 	    session.setAttribute("userSession", utilisateur);
 	    response.sendRedirect("home.jsp");
 	} else {
 	    // Si le constructeur n'a récupéré aucune données
+	    HttpSession session = request.getSession();
 	    response.sendRedirect("signin.jsp");
 	    session.setAttribute("connected", IS_NOT_CORRECT);
 	    session.setMaxInactiveInterval(1);

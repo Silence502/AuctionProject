@@ -29,10 +29,6 @@ public class ServletHomePage extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	// Création et envoie d'un cookie
-	Cookie cookie = new Cookie("home", "signup_phase");
-	cookie.setVersion(1);
-	response.addCookie(cookie);
 
 	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 	rd.forward(request, response);
