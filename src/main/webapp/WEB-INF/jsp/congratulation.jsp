@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -17,26 +16,27 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="../css/home-style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
+
+
+
 	<div class="container">
 		<div class="row">
-			<div class="col col-md-4-justify-content box"
-				style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
-				<h1>Accueil</h1>
-				<c:if test="${empty userSession}">
-					<a href="signin.jsp">Se connecter - S'inscrire</a>
-					<p>Aucune session</p>
-				</c:if>
-				<c:if test="${!empty userSession}">
-					<a href="${pageContext.request.contextPath}/ServletConnection">Se déconnecter</a>
-					<p>${request.getAttribute("intervalAttribute")}
-					<p>Session ouverte</p>
-				</c:if>
+			<div class="col col-md-5-justify-content">
+				<div class="elert alert-success" role="alert" 
+					style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-top: 20%; text-align: center;">
+					<h3>! Félicitation !</h3>
+					<p style="margin:10px">Vous êtes désormais inscrit sur ENI-Enchère. Cliquez sur retour pour revenir à la page d'accueil est vous connecter avec vos identifiants.</p>
+					<form method="GET"
+						action="home.jsp">
+						<input type="submit" value="Retour" style="margin:10px;">
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 package fr.eni.encheres.bll;
 
+import fr.eni.encheres.UtilisateurException;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateurDAO;
@@ -11,7 +12,7 @@ public class UtilisateurManager {
 	utilisateurDAO = DAOFactory.getUtilisateurDAO();
     }
     
-    public void addUtilisateur(Utilisateur u) {
+    public void addUtilisateur(Utilisateur u) throws UtilisateurException {
 	utilisateurDAO.insert(u);
     }
     
