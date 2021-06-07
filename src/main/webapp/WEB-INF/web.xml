@@ -6,6 +6,10 @@
   </welcome-file-list>
   
   <session-config>
-  	<session-timeout>10</session-timeout>
+  	<cookie-config>
+  		<comment>Id de session</comment>
+  		<max-age>50</max-age>
+  	</cookie-config>
+  	<session-timeout>30</session-timeout>
   </session-config>
 </web-app>

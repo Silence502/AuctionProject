@@ -25,15 +25,15 @@
 			<div class="col col-md-4-justify-content box"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Connexion</h1>
-				<h2>Se connecter</h2>
-				<c:if test="${isCorrect == 0}"><cite>Pseudo ou mot de passe incorrect</cite></c:if>
+				<!--Si l'attribut de la session connected est false : affichage du warning-->
+				<c:if test="${sessionScope.connected == false}"><span style="color: red;">Identifiants ou mot de passe incorrect</span></c:if>
 				<form method="POST" action="${pageContext.request.contextPath}/ServletConnection"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
-					<label for="pseudo">Pseudo</label> 
-					<input type="text" name="pseudo" placeholder="pseudo" autofocus="autofocus" required="required" 
+					<label for="id">Pseudo ou email</label> 
+					<input value="${sessionScope.pseudo}" type="text" name="id" placeholder="pseudo ou email" autofocus="autofocus" required="required" 
 							style="margin-bottom: 15px;">
 					<label for="motDePasse">Mot de passe</label> 
-					<input type="password" name="motDePasse" placeholder="*******" required="required" 
+					<input value="${sessionScope.motDePasse}" type="password" name="motDePasse" placeholder="*******" required="required" 
 							style="margin-bottom: 15px;">
 					<input type="submit"
 						value="Connexion">

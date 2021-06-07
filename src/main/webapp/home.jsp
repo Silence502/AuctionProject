@@ -34,6 +34,7 @@
 				</c:if>
 				<c:if test="${!empty userSession}">
 					<a href="${pageContext.request.contextPath}/ServletConnection">Se déconnecter</a>
+					<p>${request.getAttribute("intervalAttribute")}
 					<p>Session ouverte</p>
 				</c:if>
 			</div>
