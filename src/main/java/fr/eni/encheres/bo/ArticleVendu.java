@@ -1,6 +1,7 @@
 package fr.eni.encheres.bo;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 
 public class ArticleVendu implements Serializable {
@@ -184,7 +185,14 @@ public class ArticleVendu implements Serializable {
 	}
 	
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof ArticleVendu))
+			return false;
+		ArticleVendu art = (ArticleVendu) obj;
+		return (art.nomArticle.equals(nomArticle) && (art.description.equals(description)) && (art.dateFinEncheres.equals(dateFinEncheres)) 
+				&& (art.prixVente == prixVente) && (art.noUtilisateur == noUtilisateur));
+	}
 	
 
 }

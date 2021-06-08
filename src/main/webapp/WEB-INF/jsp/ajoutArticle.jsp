@@ -1,5 +1,6 @@
 <%@page import="fr.eni.encheres.messages.LecteurMessage"%>
 <%@page import="java.util.List"%>
+<%@page import="java.time.LocalDate"%>
 <%@page import="fr.eni.encheres.bo.ArticleVendu"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -46,7 +47,7 @@
 		}
 	%>
 	<form action="<%=request.getContextPath()%>/ServletAjoutArticle" method="post">
-		<label for="idNom">Nom : </label><input type="texte" id="idNom" name="nom" value="<%=listeCodesErreur!=null?request.getParameter("nom"):""%>"/>
+		<label for="idNom">Nom : </label><input id="idNom" name="nom" value="<%=listeCodesErreur!=null?request.getParameter("nom"):""%>"/>
 		<br/>
 		<label for="idDescription">Description : </label><input type="texte" id="idDescription" name="description" value="<%=listeCodesErreur!=null?request.getParameter("description"):""%>"/>
 		<br/>
@@ -54,19 +55,21 @@
 		
 		
 		<%	List<String> listeCategories = (List<String>) request.getAttribute("listeCategories");
-		if(listeCategories!=null) {
-		for (String cat : listeCategories) { %>
+		if(listeCategories!=null) {%>
+											<option> </option>
+
+		<%for (String cat : listeCategories) { %>
 		
 		
 											<option value=<%= cat%>> <%= cat%> </option>
 		<%}} %>
 											</select>
 		<br/>
-		<label for="idDateDebut">Date de début : </label><input type="date" id="idDateDebut" name="date_debut" value="<%=listeCodesErreur!=null?request.getParameter("date_debut"):""%>"/>
+		<label for="idDateDebut">Date de début : </label><input type="date" id="idDateDebut" name="date_debut" value="<%=listeCodesErreur!=null?request.getParameter("date_debut"):LocalDate.now()%>"/>
 		<br/>
-		<label for="idDateFin">Date de fin : </label><input type="date" id="idDateFin" name="date_fin" value="<%=listeCodesErreur!=null?request.getParameter("date_fin"):""%>"/>
+		<label for="idDateFin">Date de fin : </label><input type="date" id="idDateFin" name="date_fin" value="<%=listeCodesErreur!=null?request.getParameter("date_fin"):LocalDate.now().plusDays(7)%>"/>
 		<br/>
-		<label for="idMiseAPrix">Mise à prix : </label><input type="number" id="idMiseAPrix" name="mise_a_prix" value="<%=listeCodesErreur!=null?request.getParameter("mise_a_prix"):""%>"/>
+		<label for="idMiseAPrix">Mise à prix : </label><input type="number" id="idMiseAPrix" name="mise_a_prix" value="<%=listeCodesErreur!=null?request.getParameter("mise_a_prix"):"0"%>"/>
 		<br/>
 		<input type="submit" value="Valider"/>
 	</form>

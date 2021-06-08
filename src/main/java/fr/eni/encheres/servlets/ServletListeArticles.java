@@ -31,25 +31,48 @@ public class ServletListeArticles extends HttpServlet {
 	CategorieDAO categorieDAO = DAOFactory.getCategorieDAO();
 	ArticleVenduDAO articleVenduDAO = DAOFactory.getArticleVenduDAO();
 	List<ArticleVendu> selectionArt = new ArrayList<ArticleVendu>();
+	List<ArticleVendu> selectionArtMotCle = new ArrayList<ArticleVendu>();
 	List<String> selectionNomCat = new ArrayList<String>();
+	List<Categorie> selectionCat = new ArrayList<Categorie>();
+	String choix = "toutes";
+	int numCat;
+	String recherche;
        
-    
+	
+	public void init() throws ServletException { 
+		
+		// Enregistre dans une variable la liste des catégories
+		try {
+			selectionCat = categorieDAO.selectAll();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		
+		// Liste seulement l'ensemble des libellés des catégories
+		for (Categorie cat : selectionCat) {
+			selectionNomCat.add(cat.getLibelle());
+		}
+		
+		super.init(); 
+		}
 
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-			
+		// Enregistre dans une variable la liste des articles
 		try {
 			selectionArt = articleVenduDAO.selectAll();
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		request.setAttribute("selectionArticles", selectionArt);
 		
-    	request.setAttribute("selectionArticles", selectionArt);
+    	request.setAttribute("listeCategories", selectionNomCat);
+    	
+    	request.setAttribute("choix", "toutes");
     	
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeArticles.jsp");
     	
@@ -61,6 +84,66 @@ public class ServletListeArticles extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
+		// on enregistre le choix de la catégorie dans la variable choix
+		choix =	request.getParameter("categorie");
+		recherche = request.getParameter("recherche");
+		
+		// On s'assure que le choix n'est pas null
+		if (!choix.equals(null)) {
+			
+			// si le choix est sur une catégorie
+			if (!choix.equals("toutes")) { 
+				
+				// on repère d'abord le numéro de la catégorie correspondant
+				try {
+					numCat = categorieDAO.selectNoByLibelle(choix);
+				} catch (BusinessException e1) {
+					e1.printStackTrace();
+				}
+				
+				// on sélectionne tous les articles de la catégorie
+				try {
+					selectionArt = articleVenduDAO.selectByCategorie(numCat);
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}	
+			}
+			
+			// sinon on sélectionne tout
+			else {
+				
+				try {
+					selectionArt = articleVenduDAO.selectAll();
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
+			}
+			
+				if ((!recherche.equals(null)) && (!recherche.equals(""))) {
+					try {
+						selectionArtMotCle = articleVenduDAO.selectByMotCle(recherche);
+						System.out.println(selectionArtMotCle);
+						System.out.println(selectionArt);
+						selectionArt.retainAll(selectionArtMotCle);
+						System.out.println(selectionArt);
+					} catch (BusinessException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+					
+		request.setAttribute("selectionArticles", selectionArt);
+		
+		request.setAttribute("listeCategories", selectionNomCat);
+		
+		request.setAttribute("choix", choix);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeArticles.jsp");
+    	
+		rd.forward(request, response);
+		
+		
 	}
-
 }
+

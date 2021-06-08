@@ -17,5 +17,9 @@ public interface ArticleVenduDAO {
 	
 	List<ArticleVendu> selectAll () throws BusinessException;
 	
+	List<ArticleVendu> selectByCategorie(int num) throws BusinessException;
+	
+	List<ArticleVendu> selectByMotCle(String motCle) throws BusinessException;
+	
 	
 }

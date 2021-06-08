@@ -19,6 +19,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
     private static final String INSERT = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) VALUES(?,?,?,?,?,1,?);";
     private static final String SELECT_ALL = "SELECT * FROM articles_vendus;";
+    private static final String SELECT_BY_CATEGORIE = "SELECT * FROM articles_vendus WHERE no_categorie = ?;";
+    private static final String SELECT_BY_MOT_CLE = "SELECT * FROM articles_vendus WHERE nom_article LIKE ?";
     
     @Override
     public void insert(ArticleVendu article) throws BusinessException {
@@ -66,9 +68,55 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	catch (Exception e) {
 	    e.printStackTrace();
 	    BusinessException businessException = new BusinessException();
-	    businessException.ajouterErreur(CodesResultatDAL.SELECT_ALL_CATEGORIE_ECHEC);
+	    businessException.ajouterErreur(CodesResultatDAL.SELECT_ALL_ECHEC);
 	    throw businessException;}
 	
 	return articles;
     }
+
+	@Override
+	public List<ArticleVendu> selectByCategorie (int num) throws BusinessException {
+		List<ArticleVendu> articles = new ArrayList<>();
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+		    
+			PreparedStatement pstmt= cnx.prepareStatement(SELECT_BY_CATEGORIE);
+			pstmt.setInt(1, num);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				articles.add(new ArticleVendu (rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), rs.getInt("no_utilisateur")));
+				}
+			}
+		
+		catch (Exception e) {
+		    e.printStackTrace();
+		    BusinessException businessException = new BusinessException();
+		    businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_CATEGORIE_ECHEC);
+		    throw businessException;}
+		
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectByMotCle(String motCle) throws BusinessException {
+		List<ArticleVendu> articles = new ArrayList<>();
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+		    
+			PreparedStatement pstmt= cnx.prepareStatement(SELECT_BY_MOT_CLE);
+			pstmt.setString(1, '%' +motCle + '%');
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				articles.add(new ArticleVendu (rs.getString("nom_article"), rs.getString("description"), rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"), rs.getInt("no_utilisateur")));
+				}
+			}
+		
+		catch (Exception e) {
+		    e.printStackTrace();
+		    BusinessException businessException = new BusinessException();
+		    businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_MOT_CLE_ECHEC);
+		    throw businessException;}
+		
+		return articles;
+	}
 }

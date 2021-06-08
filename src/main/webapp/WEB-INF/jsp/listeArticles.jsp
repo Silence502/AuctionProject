@@ -26,12 +26,29 @@
 	
 	<form action="<%=request.getContextPath()%>/ServletListeArticles" method="post">
 		<fieldset>
-		<label for="idRecherche"></label><input type="texte" id="idRecherche" name="recherche" value="<%=listeCodesErreur!=null?request.getParameter("recherche"):""%>"/>
+		<label for="idRecherche"></label><input type="texte" placeholder="Le nom de l'article contient" type="texte" id="idRecherche" name="recherche" value="<%=listeCodesErreur!=null?request.getParameter("recherche"):""%>"/>
+		<br/>
+		<label for="idCategorie">Catégorie : </label> <select id="idCategorie" name="categorie">
+		
+		
+		<%	List<String> listeCategories = (List<String>) request.getAttribute("listeCategories");
+		String choix = (String) request.getAttribute("choix");
+		if(listeCategories!=null) {%>
+											<option value ="toutes"> TOUTES </option>
+		<% for (String cat : listeCategories) { %>
+		
+		
+											<option <% if (cat.equals(choix)) { %> selected <% } %> value=<%= cat%>> <%= cat%> </option>
+		<%}} %>
+											</select>
+		<br/>
+		<input type="submit" value="Rechercher"/>
+
 		</fieldset>
 		
 		<% 
 		List<ArticleVendu> listeArticles = (List<ArticleVendu>) request.getAttribute("selectionArticles");
-		if(listeArticles!=null) {
+		if (listeArticles!=null) {
 		for (ArticleVendu article : listeArticles) { 
 		out.println(article.toString());%>
 		<br/>
