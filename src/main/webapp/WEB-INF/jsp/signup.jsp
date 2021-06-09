@@ -23,7 +23,7 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
-	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv</p>
+	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv | ${sessionScope.userSession }</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-4-justify-content"

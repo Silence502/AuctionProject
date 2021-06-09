@@ -24,7 +24,7 @@
 		<![endif]-->
 
 
-
+	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv | ${sessionScope.userSession} ${sessionScope.idSession}</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-5-justify-content">

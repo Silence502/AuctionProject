@@ -24,12 +24,15 @@
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 	
-	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv</p>
+	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv | ${sessionScope.userSession} ${sessionScope.idSession}</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-4-justify-content box"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
 				<h1>Accueil</h1>
+				<c:if test="${sessionScope.changedSession == true}">
+					<p>Profil modifié avec succès !</p>
+				</c:if>
 				<c:if test="${empty userSession}">
 					<a href="signin.jsp">Se connecter - S'inscrire</a>
 					<p>Aucune session</p>
@@ -43,7 +46,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script src=""></script>
 </body>
 </html>

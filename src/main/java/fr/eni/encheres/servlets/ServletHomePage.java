@@ -56,10 +56,10 @@ public class ServletHomePage extends HttpServlet {
 	// Test de validité
 	if (pseudo.length() < 4) {
 	    // Si la taille du pseudo est inférieure à 4
-	    int toSmallId = pseudo.length();
+	    int tooSmallId = pseudo.length();
 	    // Sauvegarde des informations saisie dans le formulaire pour éviter
 	    // à l'utilisateur de recommencer
-	    session.setAttribute("tooSmall", toSmallId);
+	    session.setAttribute("tooSmall", tooSmallId);
 	    session.setAttribute("pseudo", pseudo);
 	    session.setAttribute("nom", nom);
 	    session.setAttribute("prenom", prenom);

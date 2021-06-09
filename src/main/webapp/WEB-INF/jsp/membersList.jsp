@@ -23,7 +23,7 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
-	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv</p>
+	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv | ${sessionScope.userSession} ${sessionScope.idSession}</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-12">
@@ -33,7 +33,7 @@
 				<hr>
 
 				<p>Membres inscrits : ${userList.size()}</p>
-
+				<p>${requestScope.request.testDetail}</p>
 				<table class="table">
 					<thead class="thead-dark">
 						<tr>
@@ -43,6 +43,7 @@
 							<th scope="col">Email</th>
 							<th scope="col">Téléphone</th>
 							<th scope="col">Adresse</th>
+							<th scope="col">Détails</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -53,8 +54,8 @@
 								<td>${member.prenom}</td>
 								<td>${member.email}</td>
 								<td>${member.telephone}</td>
-								<td>${member.rue}, ${member.codePostal}
-								${member.ville}</td>
+								<td>${member.rue}, ${member.codePostal} ${member.ville}</td>
+								<td><a href="${pageContext.request.contextPath}/ServletTest?detail=${member.pseudo}">Voir</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

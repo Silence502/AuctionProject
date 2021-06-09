@@ -34,4 +34,8 @@ public class UtilisateurManager {
 	List<Utilisateur> list = utilisateurDAO.selectAll();
 	return list;
     }
+    
+    public void updateUtilisateur(Utilisateur u) throws UtilisateurException {
+	utilisateurDAO.update(u);
+    }
 }

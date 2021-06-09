@@ -9,7 +9,7 @@ public interface UtilisateurDAO {
     public void insert(Utilisateur utilisateur) throws UtilisateurException;
     public Utilisateur selectById(int id);
     public List<Utilisateur> selectAll();
-    public void update(Utilisateur utilisateur);
+    public void update(Utilisateur utilisateur) throws UtilisateurException;
     public void delete(int id);
     public Utilisateur selectByPseudo(String pseudo, String mdp);
 }

@@ -55,9 +55,8 @@ public class ServletConnection extends HttpServlet {
 	
 	if (utilisateur != null) {
 	    // Si le constructeur à récupéré toutes les données
-//	    Utilisateur userProfile = new Utilisateur(utilisateur.getPseudo(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), utilisateur.getTelephone(),
-//		    utilisateur.getRue(), utilisateur.getCodePostal(), utilisateur.getVille(), utilisateur.getMotDePasse(), utilisateur.getCredit());
 	    HttpSession session = request.getSession();
+	    session.setAttribute("idSession", utilisateur.getNoUtilisateur());
 	    session.setAttribute("userSession", utilisateur.getPseudo());
 	    session.setAttribute("nomSession", utilisateur.getNom());
 	    session.setAttribute("prenomSession", utilisateur.getPrenom());
@@ -66,6 +65,7 @@ public class ServletConnection extends HttpServlet {
 	    session.setAttribute("rueSession", utilisateur.getRue());
 	    session.setAttribute("cpSession", utilisateur.getCodePostal());
 	    session.setAttribute("villeSession", utilisateur.getVille());
+	    session.setAttribute("creditSession", utilisateur.getCredit());
 	    session.setAttribute("mdpSession", utilisateur.getMotDePasse());
 	    request.setAttribute("test", utilisateur.toString());
 	    response.sendRedirect("home.jsp");
