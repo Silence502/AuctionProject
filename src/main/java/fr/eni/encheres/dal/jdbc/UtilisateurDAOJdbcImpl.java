@@ -33,7 +33,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
      *         utilisateur.
      */
     @Override
-    public void insert(Utilisateur utilisateur) throws UtilisateurException {
+    public void insert(Utilisateur utilisateur) throws UtilisateurException, NullPointerException {
 	Utilisateur userCheck = null;
 	try (Connection con = ConnectionProvider.getConnection()) {
 	    // Préparation d'un insert et d'un select
@@ -79,30 +79,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		stmtCheck.close();
 		throw new UtilisateurException("Les données saisie existent déjà dans la base de données !");
 	    }
-
-//	    try {
-//		// Comparaison du pseudo et de l'email saisie avec le pseudo et l'email
-//		// selectionné dans la BDD
-//		if (utilisateur.getEmail().equalsIgnoreCase(userCheck.getEmail())
-//			|| utilisateur.getPseudo().equalsIgnoreCase(userCheck.getPseudo())) {
-//		    // S'il y a une correspondance on ferme tout.../...
-//		    stmt.close();
-//		    stmtCheck.close();
-//		    // .../...et on propage l'exception jusqu'à la servlet chargée de gérer
-//		    // l'inscription (ServletHomePage)
-//		    throw new UtilisateurException("Un utilisateur est déjà enregistré avec ce pseudo ou cet email");
-//		}
-//	    } catch (NullPointerException e) {
-//		// S'il n'y a pas de correspondance on ferme le select et on exécute l'insert
-//		// avant fermeture
-//		stmtCheck.close();
-//		stmt.execute();
-//		ResultSet rs = stmt.getGeneratedKeys();
-//		if (rs.next()) {
-//		    utilisateur.setNoUtilisateur(1);
-//		}
-//		stmt.close();
-//	    }
 	} catch (SQLException e) {
 	    throw new UtilisateurException("L'insertion à échoué " + e);
 	}

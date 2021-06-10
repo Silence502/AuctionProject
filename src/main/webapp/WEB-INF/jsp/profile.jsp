@@ -23,19 +23,18 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
-	<p>Session numéro : ${pageContext.session.id} | version 0.070621mv | ${sessionScope.userSession}-${sessionScope.idSession}</p>
+	<p>Session numéro : ${pageContext.session.id} | ${user.pseudo}-${user.noUtilisateur}</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-12">
 				<h1>Profil</h1>
 				<hr>
 				<p>
-					<strong>Connecté :</strong> ${sessionScope.userSession} | <a href="home.jsp">Retour à l'accueil</a>
+					<strong>Connecté :</strong> ${user.pseudo} | <a href="home.jsp">Retour à l'accueil</a>
 				</p>
 				<hr>
 				<h3>Mon profil</h3>
 				<form method="POST" action="${pageContext.request.contextPath}/ServletProfileManager">
-				<input type="hidden" name="id" value="${sessionScope.idSession }">
 				<table>
 					<thead>
 						<tr>
@@ -45,39 +44,39 @@
 					<tbody>
 						<tr>
 							<th>Pseudo :</th>
-							<td><input name="pseudo" type="text" required pattern="([A-Za-z0-9]+)" maxlength="15" value="${sessionScope.userSession}"></td>
+							<td><input name="pseudo" type="text" required pattern="([A-Za-z0-9]+)" maxlength="15" value="${user.pseudo}"></td>
 							<c:if test="${tooSmall < 4}">
 								<td style="color:red;">Le pseudo doit être suppérieur à 4 caractères !</td>
 							</c:if>
 						</tr>
 						<tr>
 							<th>Nom :</th>
-							<td><input name="nom" type="text" required value="${sessionScope.nomSession}"></td>
+							<td><input name="nom" type="text" required value="${user.nom}"></td>
 						</tr>
 						<tr>
 							<th>Prénom :</th>
-							<td><input name="prenom" type="text" required value="${sessionScope.prenomSession}"></td>
+							<td><input name="prenom" type="text" required value="${user.prenom}"></td>
 						</tr>
 						<tr>
 							<th>Email :</th>
-							<td><input name="email" type="email" required value="${sessionScope.emailSession}" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> </td>
+							<td><input name="email" type="email" required value="${user.email}" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> </td>
 						</tr>
 						<tr>
 							<th>Téléphone :</th>
-							<td><input name="telephone" type="tel" value="${sessionScope.telSession}" pattern="(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}"></td>
+							<td><input name="telephone" type="tel" value="${user.telephone}" pattern="(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}"></td>
 						</tr>
 						<tr>
 							<th>Adresse :</th>
-							<td><input name="rue" type="text" required value="${sessionScope.rueSession}"></td>
+							<td><input name="rue" type="text" required value="${user.rue}"></td>
 						
 						</tr>
 						<tr>
 							<th>Code postal :</th>
-							<td><input name="codePostal" type="text" required value="${sessionScope.cpSession}" pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"></td>
+							<td><input name="codePostal" type="text" required value="${user.codePostal}" pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"></td>
 						</tr>
 						<tr>
 							<th>Ville :</th>
-							<td><input name="ville" type="text" required value="${sessionScope.villeSession}"> </td>
+							<td><input name="ville" type="text" required value="${user.ville}"> </td>
 						</tr>
 						<tr>
 							<th>Mot de passe :</th>
@@ -85,7 +84,7 @@
 						</tr>
 						<tr>
 							<th>Crédit :</th>
-							<td>${sessionScope.creditSession}</td>
+							<td>${user.credit}</td>
 						</tr>
 					</tbody>
 				</table>

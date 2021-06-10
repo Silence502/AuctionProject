@@ -39,7 +39,6 @@ public class ServletProfileManager extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 	HttpSession session = request.getSession();
-	HttpSession sessionChanging = request.getSession();
 
 	String pseudo = request.getParameter("pseudo");
 	String nom = request.getParameter("nom");
@@ -56,8 +55,7 @@ public class ServletProfileManager extends HttpServlet {
 	if (pseudo.length() < 4) {
 	    // Si le nouveau pseudo saisie est inférieur à 4 caractères
 	    int tooSmallId = pseudo.length();
-	    sessionChanging.setAttribute("tooSmall", tooSmallId);
-	    sessionChanging.setMaxInactiveInterval(1);
+	    request.setAttribute("tooSmall", tooSmallId);
 	    // On re-dispatche à la même page
 	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp");
 	    rd.forward(request, response);
@@ -68,30 +66,25 @@ public class ServletProfileManager extends HttpServlet {
 	    // Et on initialise le manager
 	    UtilisateurManager userManager = new UtilisateurManager();
 	    try {
-		// On ajoute l'utilisateur au manager qui vérifie l'existance du pseudo et du mail
-		userManager.updateUtilisateur(utilisateur);
-		// On récupère les nouvelles informations dans la session
-		session.setAttribute("idSession", utilisateur.getNoUtilisateur());
-		session.setAttribute("userSession", utilisateur.getPseudo());
-		session.setAttribute("nomSession", utilisateur.getNom());
-		session.setAttribute("prenomSession", utilisateur.getPrenom());
-		session.setAttribute("emailSession", utilisateur.getEmail());
-		session.setAttribute("telSession", utilisateur.getTelephone());
-		session.setAttribute("rueSession", utilisateur.getRue());
-		session.setAttribute("cpSession", utilisateur.getCodePostal());
-		session.setAttribute("villeSession", utilisateur.getVille());
-		session.setAttribute("creditSession", utilisateur.getCredit());
-		session.setAttribute("mdpSession", utilisateur.getMotDePasse());
-		sessionChanging.setAttribute("changedSession", CHANGED);
-		response.sendRedirect("home.jsp");
+		try {
+		    // On ajoute l'utilisateur au manager qui vérifie l'existance du pseudo et du
+		    // mail
+		    userManager.updateUtilisateur(utilisateur);
+		} catch (NullPointerException e) {
+		    // On récupère les nouvelles informations dans la session
+		    e.printStackTrace();
+		    session.setAttribute("user", utilisateur);
+		    request.setAttribute("changedSession", CHANGED);
+		    response.sendRedirect("home.jsp");
+		}
 	    } catch (UtilisateurException e) {
 		e.getMessage();
-		// Si les données correspondent à un utilisateur existant on passe un attribut de session à false
+		// Si les données correspondent à un utilisateur existant on passe un attribut
+		// de session à false
 		session.setAttribute("alreadyExistsSession", IS_EXISTS);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp");
 		rd.forward(request, response);
 	    }
-	    //sessionChanging.invalidate();
 	}
     }
 }

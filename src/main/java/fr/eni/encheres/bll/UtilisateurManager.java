@@ -14,7 +14,7 @@ public class UtilisateurManager {
 	utilisateurDAO = DAOFactory.getUtilisateurDAO();
     }
     
-    public void addUtilisateur(Utilisateur u) throws UtilisateurException {
+    public void addUtilisateur(Utilisateur u) throws UtilisateurException, NullPointerException {
 	utilisateurDAO.insert(u);
     }
     

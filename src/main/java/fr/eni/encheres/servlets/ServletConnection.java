@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 public class ServletConnection extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final boolean IS_NOT_CORRECT = false;
+    private final boolean IS_CORRECT = true;
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -43,7 +44,8 @@ public class ServletConnection extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	
+	HttpSession session = request.getSession();
+
 	// Récupération des champs du formulaire d'inscription
 	String id = request.getParameter("id");
 	String motDePasse = request.getParameter("motDePasse");
@@ -51,30 +53,25 @@ public class ServletConnection extends HttpServlet {
 	// Récupération et reconstruction de l'utilisateur depuis la BDD
 	UtilisateurManager utilisateurManager = new UtilisateurManager();
 	Utilisateur utilisateur = utilisateurManager.selectUtilisateur(id, motDePasse);
-	
-	
+
 	if (utilisateur != null) {
 	    // Si le constructeur à récupéré toutes les données
-	    HttpSession session = request.getSession();
-	    session.setAttribute("idSession", utilisateur.getNoUtilisateur());
-	    session.setAttribute("userSession", utilisateur.getPseudo());
-	    session.setAttribute("nomSession", utilisateur.getNom());
-	    session.setAttribute("prenomSession", utilisateur.getPrenom());
-	    session.setAttribute("emailSession", utilisateur.getEmail());
-	    session.setAttribute("telSession", utilisateur.getTelephone());
-	    session.setAttribute("rueSession", utilisateur.getRue());
-	    session.setAttribute("cpSession", utilisateur.getCodePostal());
-	    session.setAttribute("villeSession", utilisateur.getVille());
-	    session.setAttribute("creditSession", utilisateur.getCredit());
-	    session.setAttribute("mdpSession", utilisateur.getMotDePasse());
-	    request.setAttribute("test", utilisateur.toString());
-	    response.sendRedirect("home.jsp");
+	    if (utilisateur.getMotDePasse().equalsIgnoreCase(motDePasse)) {
+		// Si le mot de passe correspond
+		session.setAttribute("user", utilisateur);
+		session.setAttribute("userConnected", IS_CORRECT);
+		response.sendRedirect("home.jsp");
+	    } else {
+		// Si le mot de passe ne correspond pas
+		request.setAttribute("connected", IS_NOT_CORRECT);
+		RequestDispatcher rd = request.getRequestDispatcher("/signin.jsp");
+		rd.forward(request, response);
+	    }
 	} else {
 	    // Si le constructeur n'a récupéré aucune données
-	    HttpSession session = request.getSession();
-	    response.sendRedirect("signin.jsp");
-	    session.setAttribute("connected", IS_NOT_CORRECT);
-	    session.setMaxInactiveInterval(1);
+	    request.setAttribute("connected", IS_NOT_CORRECT);
+	    RequestDispatcher rd = request.getRequestDispatcher("/signin.jsp");
+	    rd.forward(request, response);
 	}
     }
 }
