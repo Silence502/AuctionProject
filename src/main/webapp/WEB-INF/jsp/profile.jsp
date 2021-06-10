@@ -35,6 +35,7 @@
 				<hr>
 				<h3>Mon profil</h3>
 				<form method="POST" action="${pageContext.request.contextPath}/ServletProfileManager">
+				<input type="hidden" name="id" value="${user.noUtilisateur}">
 				<table>
 					<thead>
 						<tr>

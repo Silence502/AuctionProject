@@ -159,7 +159,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     }
 
     @Override
-    public void update(Utilisateur utilisateur) throws UtilisateurException {
+    public void update(Utilisateur utilisateur) throws UtilisateurException, NullPointerException {
 	Utilisateur userCheck = null;
 	try (Connection con = ConnectionProvider.getConnection()) {
 	    // On prépare la requête update

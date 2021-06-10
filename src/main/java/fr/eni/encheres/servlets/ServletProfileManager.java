@@ -63,19 +63,26 @@ public class ServletProfileManager extends HttpServlet {
 	    // Si le pseudo est valide on construit l'utilisateur
 	    Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue,
 		    codePostal, ville, motDePasse);
-	    // Et on initialise le manager
-	    UtilisateurManager userManager = new UtilisateurManager();
 	    try {
 		try {
+		    // Et on initialise le manager
+		    UtilisateurManager userManager = new UtilisateurManager();
 		    // On ajoute l'utilisateur au manager qui vérifie l'existance du pseudo et du
 		    // mail
 		    userManager.updateUtilisateur(utilisateur);
+		    // On remplace l'attribut de session par le nouvel utilisateur
+		    session.setAttribute("user", utilisateur);
+		    request.setAttribute("changedSession", CHANGED);
+		    RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+		    rd.forward(request, response);
 		} catch (NullPointerException e) {
 		    // On récupère les nouvelles informations dans la session
 		    e.printStackTrace();
+		    // On remplace l'attribut de session par le nouvel utilisateur
 		    session.setAttribute("user", utilisateur);
 		    request.setAttribute("changedSession", CHANGED);
-		    response.sendRedirect("home.jsp");
+		    RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+		    rd.forward(request, response);
 		}
 	    } catch (UtilisateurException e) {
 		e.getMessage();

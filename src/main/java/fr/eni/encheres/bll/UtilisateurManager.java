@@ -35,7 +35,7 @@ public class UtilisateurManager {
 	return list;
     }
     
-    public void updateUtilisateur(Utilisateur u) throws UtilisateurException {
+    public void updateUtilisateur(Utilisateur u) throws UtilisateurException, NullPointerException {
 	utilisateurDAO.update(u);
     }
 }

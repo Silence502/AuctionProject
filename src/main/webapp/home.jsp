@@ -31,7 +31,7 @@
 				style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
 				<h1>Accueil</h1>
 				<c:if test="${changedSession == true}">
-					<p>Profil modifié avec succès !</p>
+					<p style="color:green">Profil modifié avec succès !</p>
 				</c:if>
 				<c:if test="${empty user}">
 					<a href="signin.jsp">Se connecter - S'inscrire</a>
