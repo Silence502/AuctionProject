@@ -66,6 +66,7 @@ public class ServletHomePage extends HttpServlet {
 	    // Fermeture de la session après 1 seconde pour éviter le cumul d'avertissements
 	    // Délégation de la requête à la même page pour que l'utilisateur réitère sa
 	    // requête
+	    request.setAttribute("userSave", utilisateur);
 	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 	    rd.forward(request, response);
 	} else {
@@ -90,8 +91,9 @@ public class ServletHomePage extends HttpServlet {
 		request.setAttribute("alreadyExistsSession", IS_EXISTS);
 		// On sauvegarde les informations saisies dans le formulaire hormis le pseudo et
 		// l'email
-		request.setAttribute("user", utilisateur);
-		// Fermeture de la session après 1 seconde pour éviter le cumul d'avertissements
+		request.setAttribute("userSave", utilisateur);
+		// Fermeture de la session
+		session.invalidate();
 		// Délégation de la requête à la même page pour que l'utilisateur réitère sa
 		// requête
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
