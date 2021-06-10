@@ -46,11 +46,6 @@ public abstract class CodesResultatBLL {
     public static final int REGLE_DATE_FIN_ERREUR = 20007;
     
     /**
-     * Echec quand la mise à prix n'est pas indiquée
-     */
-    public static final int REGLE_MISE_A_PRIX_OBLIGATOIRE = 20008;
-    
-    /**
      * Echec quand la mise à prix n'est pas positive
      */
     public static final int REGLE_MISE_A_PRIX_ERREUR = 20009;

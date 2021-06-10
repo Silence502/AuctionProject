@@ -3,6 +3,7 @@
 <%@page import="fr.eni.encheres.bo.ArticleVendu"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
@@ -19,41 +20,29 @@
 </head>
 <body>
 	
-	<%
-		List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur");
-
-	%>
-	
-	<form action="<%=request.getContextPath()%>/ServletListeArticles" method="post">
+	<form action="${pageContext.request.contextPath}/ServletListeArticles" method="post">
 		<fieldset>
-		<label for="idRecherche"></label><input type="texte" placeholder="Le nom de l'article contient" type="texte" id="idRecherche" name="recherche" value="<%=listeCodesErreur!=null?request.getParameter("recherche"):""%>"/>
+		<label for="idRecherche"></label><input type="texte" placeholder="Le nom de l'article contient" type="texte" id="idRecherche" name="recherche" value="<c:if test="${!empty listeCodesErreur}"> ${recherche} </c:if>">
 		<br/>
 		<label for="idCategorie">Catégorie : </label> <select id="idCategorie" name="categorie">
 		
-		
-		<%	List<String> listeCategories = (List<String>) request.getAttribute("listeCategories");
-		String choix = (String) request.getAttribute("choix");
-		if(listeCategories!=null) {%>
 											<option value ="toutes"> TOUTES </option>
-		<% for (String cat : listeCategories) { %>
-		
-		
-											<option <% if (cat.equals(choix)) { %> selected <% } %> value=<%= cat%>> <%= cat%> </option>
-		<%}} %>
+		<c:forEach items="${listeCategories}" var ="cat">
+											<option <c:if test="${cat.equals(choix)}"> selected  </c:if> value="${cat}"> ${cat} </option>
+		</c:forEach>									
+											
 											</select>
+		<br/>
 		<br/>
 		<input type="submit" value="Rechercher"/>
 
-		</fieldset>
+		</fieldset> 
 		
-		<% 
-		List<ArticleVendu> listeArticles = (List<ArticleVendu>) request.getAttribute("selectionArticles");
-		if (listeArticles!=null) {
-		for (ArticleVendu article : listeArticles) { 
-		out.println(article.toString());%>
-		<br/>
-		<% }}
-		%>
+		<c:if test="${!empty selectionArticles}"> 
+		<c:forEach items="${selectionArticles}" var ="article">
+		<p> ${article.toString()}</p>
+		</c:forEach>
+		</c:if>
 										
 	</form>
 	<a href="index.html">Retour</a>

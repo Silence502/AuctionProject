@@ -1,22 +1,18 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
-
-
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticleVenduManager;
-import fr.eni.encheres.bll.CodesResultatBLL;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.dal.CategorieDAO;
 import fr.eni.encheres.dal.DAOFactory;
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -32,6 +28,7 @@ public class ServletAjoutArticle extends HttpServlet {
 	CategorieDAO categorieDAO = DAOFactory.getCategorieDAO();
 	List<Categorie> selectionCat = new ArrayList<Categorie>();
 	List<String> selectionNomCat = new ArrayList<String>();
+	BusinessException exception = new BusinessException();
        
 	public void init() throws ServletException { 
 		
@@ -80,16 +77,7 @@ public class ServletAjoutArticle extends HttpServlet {
 			description = request.getParameter("description");
 			dateDebut = LocalDate.parse(request.getParameter("date_debut"));
 			dateFin = LocalDate.parse(request.getParameter("date_fin"));
-			
-		//	try {
 			miseAPrix = Integer.parseInt(request.getParameter("mise_a_prix"));//}
-			
-		//	catch (BusinessException e) {
-			
-		//.ajouterErreur(CodesResultatBLL.REGLE_MISE_A_PRIX_OBLIGATOIRE);}
-			
-			
-			
 			Categorie cat = new Categorie();
 			cat.setLibelle(request.getParameter("categorie"));
 			cat.setNoCategorie(categorieDAO.selectNoByLibelle(cat.getLibelle()));
@@ -101,6 +89,18 @@ public class ServletAjoutArticle extends HttpServlet {
 		catch (BusinessException e) {
 	
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+		}
+		
+		catch (NumberFormatException nfe) {
+			
+			exception.ajouterErreur(CodesResultatServlets.REGLE_MISE_A_PRIX_OBLIGATOIRE);
+			request.setAttribute("listeCodesErreur", exception.getListeCodesErreur());
+		}
+		
+		catch (DateTimeParseException dtpe) {
+			
+			exception.ajouterErreur(CodesResultatServlets.REGLE_DATE_OBLIGATOIRE);
+			request.setAttribute("listeCodesErreur", exception.getListeCodesErreur());
 		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/ajoutArticle.jsp");

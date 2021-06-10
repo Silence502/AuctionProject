@@ -6,8 +6,14 @@ package fr.eni.encheres.servlets;
 public abstract class CodesResultatServlets {
 	
 	/**
-	 * Format incorrect
-	 */
+     * Echec quand la mise à prix n'est pas indiquée
+     */
+    public static final int REGLE_MISE_A_PRIX_OBLIGATOIRE = 30000;
+    
+    /**
+     * Echec quand une date n'est pas indiquée
+     */
+    public static final int REGLE_DATE_OBLIGATOIRE = 30001;
 	
 	
 	

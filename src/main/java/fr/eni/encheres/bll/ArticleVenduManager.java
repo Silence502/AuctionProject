@@ -156,11 +156,6 @@ public class ArticleVenduManager {
      */
     private void validerMiseAPrix(ArticleVendu articleVendu, BusinessException businessException) {
     	
-    	// La mise à prix doit être indiquée
-    	if (articleVendu.getMiseAPrix()==-1) {
-    		businessException.ajouterErreur(CodesResultatBLL.REGLE_MISE_A_PRIX_OBLIGATOIRE);
-    	}
-    	
     	// La mise à prix doit être posititive
     	if (articleVendu.getMiseAPrix()<=0) {
     		businessException.ajouterErreur(CodesResultatBLL.REGLE_MISE_A_PRIX_ERREUR);

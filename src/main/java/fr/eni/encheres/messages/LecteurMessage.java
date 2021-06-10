@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
  * @author Administrator
  *
  */
-public abstract class LecteurMessage {
+public class LecteurMessage {
     private static ResourceBundle rb;
 
     static {

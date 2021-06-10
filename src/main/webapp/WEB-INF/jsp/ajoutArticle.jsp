@@ -4,6 +4,7 @@
 <%@page import="fr.eni.encheres.bo.ArticleVendu"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
@@ -19,60 +20,45 @@
 </xml><![endif]-->
 </head>
 <body>
-
-	<%
-		ArticleVendu articleVendu = (ArticleVendu)request.getAttribute("articleVendu");
-		if(articleVendu!=null)
-		{
-	%>
+	<c:if test="${!empty articleVendu}">
 			<p style="color:red;">L'article suivant a été ajouté avec succès :</p>
-			<p><%=articleVendu.getNomArticle()%> <%= articleVendu.getDescription() %></p>
-	<%	
-		} 
-	%>
+			<p>${articleVendu.nomArticle} ${articleVendu.description}</p>
+	</c:if>
 	
-	<%
-		List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur");
-		if(listeCodesErreur!=null)
-		{
-	%>
-			<p style="color:red;">Erreur, l'article n'a pas pu être ajouté :</p>
-	<%
-			for(int codeErreur:listeCodesErreur)
-			{
-	%>
-				<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
-	<%	
-			}
-		}
-	%>
-	<form action="<%=request.getContextPath()%>/ServletAjoutArticle" method="post">
-		<label for="idNom">Nom : </label><input id="idNom" name="nom" value="<%=listeCodesErreur!=null?request.getParameter("nom"):""%>"/>
+	<c:if test="${!empty listeCodesErreur}">
+			<p style="color:red";> Erreur, l'article n'a pas pu être ajouté :</p>			
+		<c:forEach items="${listeCodesErreur}" var ="codeErreur">
+			  	<p>${LecteurMessage.getMessageErreur(codeErreur)}</p>   
+		</c:forEach>
+	</c:if>
+	
+	  
+	<form action="${pageContext.request.contextPath}/ServletAjoutArticle" method="post">
+		<label for="idNom">Nom : </label><input id="idNom" name="nom" value= "<c:if test="${!empty listeCodesErreur}"> ${nom} </c:if>">
 		<br/>
-		<label for="idDescription">Description : </label><input type="texte" id="idDescription" name="description" value="<%=listeCodesErreur!=null?request.getParameter("description"):""%>"/>
+		<label for="idDescription">Description : </label><input type="texte" id="idDescription" name="description" value= "<c:if test="${!empty listeCodesErreur}"> ${description} </c:if>">
 		<br/>
-		<label for="idCategorie">Catégorie : </label> <select id="idCategorie" name="categorie">
+		<label for="idCategorie">Catégorie : </label> 
+		<select id="idCategorie" name="categorie">
 		
 		
-		<%	List<String> listeCategories = (List<String>) request.getAttribute("listeCategories");
-		if(listeCategories!=null) {%>
+		
 											<option> </option>
-
-		<%for (String cat : listeCategories) { %>
-		
-		
-											<option value=<%= cat%>> <%= cat%> </option>
-		<%}} %>
-											</select>
+		<c:forEach items="${listeCategories}" var ="cat">
+											<option value= "${cat}"> ${cat} </option>
+		</c:forEach>
+	
+		</select>
 		<br/>
-		<label for="idDateDebut">Date de début : </label><input type="date" id="idDateDebut" name="date_debut" value="<%=listeCodesErreur!=null?request.getParameter("date_debut"):LocalDate.now()%>"/>
+		<label for="idDateDebut">Date de début : </label><input type="date" id="idDateDebut" name="date_debut" value= "${!empty listeCodesErreur ? date_debut : LocalDate.now()}">
 		<br/>
-		<label for="idDateFin">Date de fin : </label><input type="date" id="idDateFin" name="date_fin" value="<%=listeCodesErreur!=null?request.getParameter("date_fin"):LocalDate.now().plusDays(7)%>"/>
+																													
+		<label for="idDateFin">Date de fin : </label><input type="date" id="idDateFin" name="date_fin" value= "${!empty listeCodesErreur ? date_fin : LocalDate.now().plusDays(7)}"> 
 		<br/>
-		<label for="idMiseAPrix">Mise à prix : </label><input type="number" id="idMiseAPrix" name="mise_a_prix" value="<%=listeCodesErreur!=null?request.getParameter("mise_a_prix"):"0"%>"/>
+		<label for="idMiseAPrix">Mise à prix : </label><input type="number" id="idMiseAPrix" name="mise_a_prix" value= "${!empty listeCodesErreur ? mise_a_prix : 0}"> 
 		<br/>
 		<input type="submit" value="Valider"/>
-	</form>
+	</form> 
 	<a href="index.html">Retour</a>
 </body>
 </html>
