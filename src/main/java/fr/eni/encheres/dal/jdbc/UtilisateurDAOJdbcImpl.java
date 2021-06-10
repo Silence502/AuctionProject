@@ -60,10 +60,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		// été trouvé dans la BDD avec la requête select sinon il sera juste null
 		userCheck = new Utilisateur(rsCheck.getString("pseudo"), rsCheck.getString("email"));
 	    }
-
 	    // Vérification des données récupéré dans la BDD
-	    if (userCheck.getEmail().trim() == null || userCheck.getPseudo().trim() == null) {
-		// Si rien n'a été trouvé on ferme le select ../..
+	    try {
+		if (userCheck.getEmail().trim() != null || userCheck.getPseudo().trim() != null) {
+		    // Si une correspondance à été trouvé on ferme tout et on propage l'exception
+		    // jusqu'a l'IHM
+		    throw new UtilisateurException("Les données saisie existent déjà dans la base de données !");
+		}
+	    } catch (NullPointerException e) {
+		// On ferme le select
 		stmtCheck.close();
 		// On exécute l'insert
 		stmt.execute();
@@ -72,12 +77,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		    utilisateur.setNoUtilisateur(1);
 		}
 		stmt.close();
-	    } else {
-		// Si une correspondance à été trouvé on ferme tout et on propage l'exception
-		// jusqu'a l'IHM
-		stmt.close();
-		stmtCheck.close();
-		throw new UtilisateurException("Les données saisie existent déjà dans la base de données !");
 	    }
 	} catch (SQLException e) {
 	    throw new UtilisateurException("L'insertion à échoué " + e);
@@ -186,33 +185,31 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		userCheck = new Utilisateur(rsCheck.getString("pseudo"), rsCheck.getString("email"));
 	    }
 	    // Vérification des données récupéré dans la BDD
-	    if (userCheck.getEmail().trim() == null || userCheck.getPseudo().trim() == null) {
-		// Si rien n'a été trouvé on ferme le select ../..
+	    try {
+		// Si un pseudo ou un email correspondant est trouvé dans la BDD
+		if (userCheck.getEmail().trim() != null || userCheck.getPseudo().trim() != null) {
+		    // Et si ce pseudo et cet email sont égals aux donnée dans le formulaire
+		    if (userCheck.getEmail().equalsIgnoreCase(utilisateur.getEmail())
+			    || userCheck.getPseudo().equalsIgnoreCase(utilisateur.getPseudo())) {
+			stmtCheck.close();
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+			    utilisateur.setNoUtilisateur(1);
+			}
+			stmt.close();
+		    } else {
+			throw new UtilisateurException("Les données saisie existent déjà dans la base de données !");
+		    }
+		}
+	    } catch (NullPointerException e) {
 		stmtCheck.close();
-		// On exécute l'update
 		stmt.executeUpdate();
 		ResultSet rs = stmt.getGeneratedKeys();
 		if (rs.next()) {
 		    utilisateur.setNoUtilisateur(1);
 		}
 		stmt.close();
-	    } else if (userCheck.getEmail().equalsIgnoreCase(utilisateur.getEmail())
-		    || userCheck.getPseudo().equalsIgnoreCase(utilisateur.getPseudo())) {
-		// Si rien n'a été trouvé on ferme le select ../..
-		stmtCheck.close();
-		// On exécute l'update
-		stmt.executeUpdate();
-		ResultSet rs = stmt.getGeneratedKeys();
-		if (rs.next()) {
-		    utilisateur.setNoUtilisateur(1);
-		}
-		stmt.close();
-	    } else {
-		// Si une correspondance à été trouvé on ferme tout et on propage l'exception
-		// jusqu'a l'IHM
-		stmt.close();
-		stmtCheck.close();
-		throw new UtilisateurException("Les données saisie existent déjà dans la base de données !");
 	    }
 	} catch (SQLException e) {
 	    throw new UtilisateurException("La mise à jour des données à échouée " + e);

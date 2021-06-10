@@ -64,31 +64,22 @@ public class ServletProfileManager extends HttpServlet {
 	    Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue,
 		    codePostal, ville, motDePasse);
 	    try {
-		try {
-		    // Et on initialise le manager
-		    UtilisateurManager userManager = new UtilisateurManager();
-		    // On ajoute l'utilisateur au manager qui vérifie l'existance du pseudo et du
-		    // mail
-		    userManager.updateUtilisateur(utilisateur);
-		    // On remplace l'attribut de session par le nouvel utilisateur
-		    session.setAttribute("user", utilisateur);
-		    request.setAttribute("changedSession", CHANGED);
-		    RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-		    rd.forward(request, response);
-		} catch (NullPointerException e) {
-		    // On récupère les nouvelles informations dans la session
-		    e.printStackTrace();
-		    // On remplace l'attribut de session par le nouvel utilisateur
-		    session.setAttribute("user", utilisateur);
-		    request.setAttribute("changedSession", CHANGED);
-		    RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-		    rd.forward(request, response);
-		}
+		// Et on initialise le manager
+		UtilisateurManager userManager = new UtilisateurManager();
+		// On ajoute l'utilisateur au manager qui vérifie l'existance du pseudo et du
+		// mail
+		userManager.updateUtilisateur(utilisateur);
+		// On récupère les nouvelles informations dans la session
+		session.setAttribute("user", utilisateur);
+		// On remplace l'attribut de session par le nouvel utilisateur
+		request.setAttribute("changedSession", CHANGED);
+		RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+		rd.forward(request, response);
 	    } catch (UtilisateurException e) {
 		e.getMessage();
 		// Si les données correspondent à un utilisateur existant on passe un attribut
 		// de session à false
-		session.setAttribute("alreadyExistsSession", IS_EXISTS);
+		request.setAttribute("alreadyExistsSession", IS_EXISTS);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp");
 		rd.forward(request, response);
 	    }
