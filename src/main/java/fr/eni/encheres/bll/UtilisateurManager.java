@@ -1,5 +1,7 @@
 package fr.eni.encheres.bll;
 
+import java.util.List;
+
 import fr.eni.encheres.UtilisateurException;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
@@ -12,7 +14,7 @@ public class UtilisateurManager {
 	utilisateurDAO = DAOFactory.getUtilisateurDAO();
     }
     
-    public void addUtilisateur(Utilisateur u) throws UtilisateurException {
+    public void addUtilisateur(Utilisateur u) throws UtilisateurException, NullPointerException {
 	utilisateurDAO.insert(u);
     }
     
@@ -26,5 +28,14 @@ public class UtilisateurManager {
 	Utilisateur user = new Utilisateur();
 	user = utilisateurDAO.selectById(id);
 	return user;
+    }
+    
+    public List<Utilisateur> getUtilisateur(){
+	List<Utilisateur> list = utilisateurDAO.selectAll();
+	return list;
+    }
+    
+    public void updateUtilisateur(Utilisateur u) throws UtilisateurException, NullPointerException {
+	utilisateurDAO.update(u);
     }
 }

@@ -29,10 +29,6 @@ public class ServletHomePage extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	// Création et envoie d'un cookie
-	Cookie cookie = new Cookie("home", "signup_phase");
-	cookie.setVersion(1);
-	response.addCookie(cookie);
 
 	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 	rd.forward(request, response);
@@ -57,56 +53,49 @@ public class ServletHomePage extends HttpServlet {
 	String ville = request.getParameter("ville");
 	String motDePasse = request.getParameter("motDePasse");
 	String pseudo = request.getParameter("pseudo");
+	Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+		motDePasse);
 	// Test de validité
 	if (pseudo.length() < 4) {
 	    // Si la taille du pseudo est inférieure à 4
-	    int toSmallId = pseudo.length();
+	    int tooSmallId = pseudo.length();
 	    // Sauvegarde des informations saisie dans le formulaire pour éviter
 	    // à l'utilisateur de recommencer
-	    session.setAttribute("tooSmall", toSmallId);
-	    session.setAttribute("pseudo", pseudo);
-	    session.setAttribute("nom", nom);
-	    session.setAttribute("prenom", prenom);
-	    session.setAttribute("email", email);
-	    session.setAttribute("telephone", telephone);
-	    session.setAttribute("rue", rue);
-	    session.setAttribute("codePostal", codePostal);
-	    session.setAttribute("ville", ville);
+	    request.setAttribute("user", utilisateur);
+	    request.setAttribute("tooSmall", tooSmallId);
 	    // Fermeture de la session après 1 seconde pour éviter le cumul d'avertissements
-	    session.setMaxInactiveInterval(1);
-	    // Délégation de la requête à la même page pour que l'utilisateur réitère sa requête
+	    // Délégation de la requête à la même page pour que l'utilisateur réitère sa
+	    // requête
+	    request.setAttribute("userSave", utilisateur);
 	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 	    rd.forward(request, response);
 	} else {
-	    // Si la saisie du pseudo est valide on construit l'utilisateur avec les données saisies
-	    Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
-		    motDePasse);
+	    // Si la saisie du pseudo est valide on construit l'utilisateur avec les données
+	    // saisies
 	    UtilisateurManager utilisateurManager = new UtilisateurManager();
 	    try {
-		// On ajoute l'utilisateur construit à la classe utilisateurManager pour l'envoyer à la BDD
+		// On ajoute l'utilisateur construit à la classe utilisateurManager pour
+		// l'envoyer à la BDD
 		utilisateurManager.addUtilisateur(utilisateur);
-		// On garde en mémoire le pseudo et le mot de passe pour l'ajouter automatiquement
-		// au formulaire de connexion pour le confort de l'utilisateur
-		session.setAttribute("pseudo", pseudo);
-		session.setAttribute("motDePasse", motDePasse);
+		// On garde en mémoire le pseudo et le mot de passe pour l'ajouter
+		// automatiquement
+		session.invalidate();
 		// Délégation de la requête à l'affichage des félicitations
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/congratulation.jsp");
 		rd.forward(request, response);
 	    } catch (UtilisateurException e) {
-		// Si lors de l'envoie à la base de données le pseudo ou l'email correspondent
-		// à un utilisateur déjà enregistré...
-		// On passe false à un attribut de session pour l'affichage du warning à l'utilisateur
-		session.setAttribute("alreadyExistsSession", IS_EXISTS);
-		// On sauvegarde les informations saisies dans le formulaire hormis le pseudo et l'email
-		session.setAttribute("nom", nom);
-		session.setAttribute("prenom", prenom);
-		session.setAttribute("telephone", telephone);
-		session.setAttribute("rue", rue);
-		session.setAttribute("codePostal", codePostal);
-		session.setAttribute("ville", ville);
-		// Fermeture de la session après 1 seconde pour éviter le cumul d'avertissements
-		session.setMaxInactiveInterval(1);
-		// Délégation de la requête à la même page pour que l'utilisateur réitère sa requête
+		// Si lors de l'envoie à la base de données le pseudo ou l'email correspondent à
+		// un utilisateur déjà enregistré...
+		// On passe false à un attribut de session pour l'affichage du warning à
+		// l'utilisateur
+		request.setAttribute("alreadyExistsSession", IS_EXISTS);
+		// On sauvegarde les informations saisies dans le formulaire hormis le pseudo et
+		// l'email
+		request.setAttribute("userSave", utilisateur);
+		// Fermeture de la session
+		session.invalidate();
+		// Délégation de la requête à la même page pour que l'utilisateur réitère sa
+		// requête
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 		rd.forward(request, response);
 	    }

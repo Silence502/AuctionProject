@@ -23,24 +23,29 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
+	
+	<p>Session numéro : ${pageContext.session.id} | ${user.pseudo}-${user.noUtilisateur}</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-4-justify-content box"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
 				<h1>Accueil</h1>
-				<c:if test="${empty userSession}">
+				<c:if test="${changedSession == true}">
+					<p style="color:green">Profil modifié avec succès !</p>
+				</c:if>
+				<c:if test="${empty user}">
 					<a href="signin.jsp">Se connecter - S'inscrire</a>
 					<p>Aucune session</p>
 				</c:if>
-				<c:if test="${!empty userSession}">
+				<c:if test="${!empty user}">
 					<a href="${pageContext.request.contextPath}/ServletConnection">Se déconnecter</a>
-					<p>${request.getAttribute("intervalAttribute")}
-					<p>Session ouverte</p>
+					<a href="${pageContext.request.contextPath}/ServletMembersList">Liste des membres</a>
+					<a href="${pageContext.request.contextPath}/ServletProfileManager">Mon profil</a>
+					<p>Session ouverte : ${user.pseudo}</p>
 				</c:if>
 			</div>
 		</div>
 	</div>
-
 	<script src=""></script>
 </body>
 </html>

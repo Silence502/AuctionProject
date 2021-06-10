@@ -23,6 +23,7 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
+	<p>Session numéro : ${pageContext.session.id} | ${user.pseudo}-${user.noUtilisateur}</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-4-justify-content"
@@ -40,27 +41,27 @@
 					</c:if>
 						<label for="pseudo">Pseudo*</label> 
 						<input name="pseudo" type="text"
-						placeholder="pseudo" required pattern="([A-Za-z0-9]+)" maxlength="15" value="${sessionScope.pseudo}"> 
+						placeholder="pseudo" required pattern="([A-Za-z0-9]+)" maxlength="15"> 
 						<label for="nom">Nom*</label>
-						<input name="nom" type="text" placeholder="nom" required value="${sessionScope.nom}">
+						<input name="nom" type="text" placeholder="nom" required value="${userSave.nom}">
 						<label for="prenom">Prenom*</label>
-						<input name="prenom" type="text" placeholder="prenom" required value="${sessionScope.prenom}"> 
+						<input name="prenom" type="text" placeholder="prenom" required value="${userSave.prenom}"> 
 						<label for="email">Adresse mail*</label> 
 						<input name="email" type="email"
-						placeholder="email" required value="${sessionScope.email}" pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> 
+						placeholder="email" required pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})"> 
 						<label for="telephone">Telephone</label> 
 						<input name="telephone"
-						type="tel" placeholder="telephone" value="${sessionScope.telephone}" pattern="(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}"> 
+						type="tel" placeholder="telephone" value="${userSave.telephone}" pattern="(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}"> 
 						<label for="rue">Rue*</label> 
-						<input name="rue" type="text" placeholder="rue" required value="${sessionScope.rue}"> 
+						<input name="rue" type="text" placeholder="rue" required value="${userSave.rue}"> 
 						<label for="codePostal">Code postal*</label> 
 						<input name="codePostal"
-						type="text" placeholder="code postal" required value="${sessionScope.codePostal}" pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}">
+						type="text" placeholder="code postal" required value="${userSave.codePostal}" pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}">
 						<label for="ville">Ville*</label> 
-						<input name="ville" type="text" placeholder="ville" required value="${sessionScope.ville}"> 
+						<input name="ville" type="text" placeholder="ville" required value="${userSave.ville}"> 
 						<label for="motDePasse">Mot de passe*</label> 
 						<input name="motDePasse" type="password" placeholder="*******" required>
-						<cite>* mentions sont obligatoires</cite>
+						<cite>* mentions obligatoires</cite>
 					<input type="submit" value="Envoyer">
 					<a href="signin.jsp">Retour</a>
 				</form>
