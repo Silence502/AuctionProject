@@ -29,7 +29,7 @@
 			<div class="col col-md-4-justify-content"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Inscription</h1>
-				
+
 				<form method="POST" action="${pageContext.request.contextPath}/ServletHomePage"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column">
 					<c:if test="${tooSmall < 4}"><span style="color:red">Le pseudo doit être supérieur à 3 caractères</span></c:if>

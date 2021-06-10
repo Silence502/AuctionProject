@@ -20,5 +20,23 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int INSERT_ARTICLE_VENDU_ECHEC=10002;
 	
+	/**
+	 * Echec de la selection de toutes les catégories
+	 */
+	public static final int SELECT_ALL_CATEGORIE_ECHEC=10003;
 	
+	/**
+	 * Echec de la selection de l'ensemble des articles
+	 */
+	public static final int SELECT_ALL_ECHEC=10004;
+	
+	/**
+	 * Echec de la selection par catégorie
+	 */
+	public static final int SELECT_BY_CATEGORIE_ECHEC=10005;
+	
+	/**
+	 * Echec de la selection par mot clé
+	 */
+	public static final int SELECT_BY_MOT_CLE_ECHEC=10005;
 }
