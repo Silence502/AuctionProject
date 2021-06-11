@@ -191,6 +191,23 @@ public class ArticleVendu {
 	public void setCategorieArticle(Categorie categorieArticle) {
 		this.categorieArticle = categorieArticle;
 	}
+	/**
+	 * Getter de noUtilisateur
+	 * @return noUtilisateur
+	 */
+	public Integer getNoUtilisateur() {
+	    return noUtilisateur;
+	}
+
+
+	/**
+	 * Setter de noUtilisateur
+	 * @param noUtilisateur étant noUtilisateur à paramétrer de type Integer
+	 */
+	public void setNoUtilisateur(Integer noUtilisateur) {
+	    this.noUtilisateur = noUtilisateur;
+	}
+	
 
 
 	@Override
@@ -208,6 +225,9 @@ public class ArticleVendu {
 		return (art.nomArticle.equals(nomArticle) && (art.description.equals(description)) && (art.dateFinEncheres.equals(dateFinEncheres)) 
 				&& (art.prixVente == prixVente) && (art.noUtilisateur == noUtilisateur));
 	}
+
+
+	
 	
 
 }

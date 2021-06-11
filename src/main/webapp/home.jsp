@@ -31,14 +31,11 @@
 		<div class="row">
 			<div class="col col-md-12"
 				style="display: flex;  flex-direction: column; margin-bottom: 20px;">
-				<div style="margin:auto; border:1px, solid, black">
-					<h1>Accueil</h1>
+				<h1>Accueil</h1>
+				<hr>
 					<c:if test="${changedSession == true}">
 					<p style="color: green">Profil modifié avec succès !</p>
 				</c:if>
-				</div>
-				<hr>
-				
 				<c:if test="${empty user}">
 					<div style="display: flex;justify-content: flex-end;">
 						<a href="signin.jsp">Se connecter / S'inscrire</a>
@@ -46,50 +43,75 @@
 				</c:if>
 				<c:if test="${!empty user}">
 				
-					<div style="display: flex;justify-content: flex-end;">
-						<p>
-							<a href="${pageContext.request.contextPath}/ServletHomeDisconnected">Se déconnecter </a> |
-							<a href="${pageContext.request.contextPath}/ServletMembersList">Liste des membres </a> |
-							<a href="${pageContext.request.contextPath}/ServletProfileManager">Mon profil </a> |
-							<a href="${pageContext.request.contextPath}/ServletAjoutArticle">Créer une enchère</a>
-						</p>
+					<div style="display: flex;justify-content: space-between;">
+						<div>
+							<p><strong>Connecté : </strong>${user.pseudo}</p>
+						</div>
+						<div>
+							<p>
+								<a href="${pageContext.request.contextPath}/ServletHomeDisconnected">Se déconnecter </a> |
+								<a href="${pageContext.request.contextPath}/ServletMembersList">Liste des membres </a> |
+								<a href="${pageContext.request.contextPath}/ServletProfileManager">Mon profil </a> |
+								<a href="${pageContext.request.contextPath}/ServletAjoutArticle">Créer une enchère</a>
+							</p>
+						</div>
 					</div>
 				</c:if>
 
 				<hr>
 				<form
-					action="${pageContext.request.contextPath}/ServletListeArticles"
+					action="${pageContext.request.contextPath}/ServletHomeConnected"
 					method="GET">
 					<h3>Filtres :</h3>
-					<div class="form-inline">
-						<input class="form-control" type="texte"
-							placeholder="Le nom de l'article contient" type="texte"
-							id="idRecherche" name="recherche" style="margin-right: 2%;"
-							value="<c:if test="${!empty listeCodesErreur}"> ${recherche} </c:if>">
-						<input type="submit" class="btn btn-dark" value="Rechercher" />
+					<div style="display: flex; justify-content: space-between;">
+						<div class="form-inline">
+							<input class="form-control" type="texte" style="margin-bottom: 10px;"
+								placeholder="Le nom de l'article contient" type="texte"
+								id="idRecherche" name="recherche" style="margin-right: 2%;"
+								value="<c:if test="${!empty listeCodesErreur}"> ${recherche} </c:if>">
+							<input type="submit" class="btn btn-dark" value="Rechercher" style="margin-bottom: 10px;" />
+						</div>
+						<div>
+							<label for="idCategorie">Catégorie : </label> <select
+								id="idCategorie" name="categorie">
+								<option class="form-control" value="toutes">TOUTES</option>
+								<c:forEach items="${listeCategories}" var="cat">
+									<option <c:if test="${cat.equals(choix)}"> selected  </c:if>
+										value="${cat}">${cat}</option>
+								</c:forEach>
+							</select> <br /> <br />
+						</div>
 					</div>
-
 					<hr>
-					<div class="form-group">
-						<label for="idCategorie">Catégorie : </label> <select
-							id="idCategorie" name="categorie">
-							<option class="form-control" value="toutes">TOUTES</option>
-							<c:forEach items="${listeCategories}" var="cat">
-								<option <c:if test="${cat.equals(choix)}"> selected  </c:if>
-									value="${cat}">${cat}</option>
-							</c:forEach>
-						</select> <br /> <br />
-					</div>
-					<c:if test="${!empty selectionArticles}">
-						<c:forEach items="${selectionArticles}" var="article">
-							<p>${article.toString()}</p>
-						</c:forEach>
-					</c:if>
-
+					<table class="table">
+						<thead class="thead-light">
+							<tr>
+								<th scope="col">Nom</th>
+								<th scope="col">Description</th>
+								<th scope="col">Date de fin</th>
+								<th scope="col">Prix de départ</th>
+								<th scope="col">Vendeur</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${!empty selectionArticles}">
+								<c:forEach items="${selectionArticles}" var="article">
+									<tr>
+										<td scope="row">${article.nomArticle}</td>
+										<td>${article.description}</td>
+										<td>${article.dateFinEncheres}</td>
+										<td>${article.prixVente}</td>
+										<td>${article.noUtilisateur}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</tbody>
+					</table>
 				</form>
 			</div>
 		</div>
 	</div>
+	${article.toString()}
 	<script src=""></script>
 </body>
 </html>

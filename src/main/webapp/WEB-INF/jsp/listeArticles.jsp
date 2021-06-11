@@ -53,6 +53,26 @@
 					</div>
 					
 					<hr>
+					
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">Nom</th>
+								<th scope="col">Description</th>
+								<th scope="col">Date de fin</th>
+								<th scope="col">Prix de départ</th>
+								<th scope="col">Vendeur</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${!empty selectionArticles}">
+								<c:forEach items="${selectionArticles}" var="article">
+									<td>${article.nomArticle}</td>
+								</c:forEach>
+							</c:if>
+						</tbody>
+					</table>
+					
 					<div class="form-group">
 						<label for="idCategorie">Catégorie : </label> 
 						<select id="idCategorie" name="categorie">
@@ -61,13 +81,10 @@
 								<option <c:if test="${cat.equals(choix)}"> selected  </c:if>
 									value="${cat}">${cat}</option>
 							</c:forEach>
-						</select> <br /> <br />
+						</select> 
+						<br /> <br />
 					</div>
-					<c:if test="${!empty selectionArticles}">
-						<c:forEach items="${selectionArticles}" var="article">
-							<p>${article.toString()}</p>
-						</c:forEach>
-					</c:if>
+					
 
 				</form>
 			</div>

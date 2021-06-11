@@ -44,7 +44,7 @@
 					action="${pageContext.request.contextPath}/ServletHomePage">
 					<input class="btn btn-dark" type="submit" value="Inscription">
 				</form>
-				<a href="home.jsp">Retour</a>
+				<a href="${pageContext.request.contextPath}/ServletListeArticles">Retour</a>
 			</div>
 		</div>
 	</div>

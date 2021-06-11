@@ -50,16 +50,26 @@
 						<c:forEach var="member" items="${userList}">
 							<tr>
 								<td scope="row">${member.pseudo}</td>
-								<td>${member.nom}</td>
+								<td id="nom">${member.nom}</td>
 								<td>${member.prenom}</td>
 								<td>${member.email}</td>
 								<td>${member.telephone}</td>
 								<td>${member.rue}, ${member.codePostal} ${member.ville}</td>
-								<td><a href="${pageContext.request.contextPath}/ServletTest?detail=${member.pseudo}">Voir</a></td>
+								<td><a href="${pageContext.request.contextPath}/ServletMemberDetails?
+								detail_pseudo=${member.pseudo}
+								&detail_nom=${member.nom}
+								&detail_prenom=${member.prenom}
+								&detail_email=${member.email}
+								&detail_telephone=${member.telephone}
+								&detail_telephone=${member.telephone}
+								&detail_rue=${member.rue}
+								&detail_cp=${member.codePostal}
+								&detail_ville=${member.ville}">Voir</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+ 				
 			</div>
 		</div>
 	</div>

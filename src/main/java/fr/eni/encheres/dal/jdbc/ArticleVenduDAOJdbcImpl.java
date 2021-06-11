@@ -62,7 +62,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	    while (rs.next()) {
 		articles.add(new ArticleVendu(rs.getString("nom_article"), rs.getString("description"),
-			rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"),
+			rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"),
 			rs.getInt("no_utilisateur")));
 	    }
 	}
@@ -88,7 +88,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	    ResultSet rs = pstmt.executeQuery();
 	    while (rs.next()) {
 		articles.add(new ArticleVendu(rs.getString("nom_article"), rs.getString("description"),
-			rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"),
+			rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"),
 			rs.getInt("no_utilisateur")));
 	    }
 	}
@@ -114,7 +114,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	    ResultSet rs = pstmt.executeQuery();
 	    while (rs.next()) {
 		articles.add(new ArticleVendu(rs.getString("nom_article"), rs.getString("description"),
-			rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_vente"),
+			rs.getDate("date_fin_encheres").toLocalDate(), rs.getInt("prix_initial"),
 			rs.getInt("no_utilisateur")));
 	    }
 	}

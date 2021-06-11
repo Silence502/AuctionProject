@@ -127,7 +127,7 @@ public class ServletListeArticles extends HttpServlet {
 	request.setAttribute("listeCategories", selectionNomCat);
 	request.setAttribute("choix", choix);
 
-	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+	RequestDispatcher rd = request.getRequestDispatcher("/ServletListeArticles");
 	rd.forward(request, response);
 
     }

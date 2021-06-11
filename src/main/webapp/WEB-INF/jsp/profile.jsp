@@ -30,12 +30,25 @@
 			<div class="col col-md-12">
 				<h1>Profil</h1>
 				<hr>
-				<p>
-					<strong>Connecté :</strong> ${user.pseudo} | <a href="${pageContext.request.contextPath}/ServletListeArticles">Retour
+				<div style="display: flex;justify-content: space-between;">
+					<div>
+					 	<p><strong>Connecté :</strong> ${user.pseudo}</p>
+					</div>
+					
+					<div>
+						<a href="${pageContext.request.contextPath}/ServletListeArticles">Retour
 						à l'accueil</a>
-				</p>
+					</div>
+				</div>
 				<hr>
-				<h3>Mon profil</h3>
+				<div style="display: flex;justify-content: flex-start;">
+					<div>
+						<h3>Mon profil</h3>
+					</div>
+					<div>
+						<input style="margin-left:50%" type="submit" class="btn btn-dark" value="Valider les modifications">
+					</div>
+				</div>
 				<form method="POST"
 					action="${pageContext.request.contextPath}/ServletProfileManager">
 					<input type="hidden" name="id" value="${user.noUtilisateur}">
@@ -43,7 +56,7 @@
 						<td style="color: red;">Le pseudo doit être suppérieur à 4
 							caractères !</td>
 					</c:if>
-					<table>
+					<table class="table table-bordered" style="width:50%">
 						<thead>
 							<tr>
 								<th colspan="7">Données personnelles</th>
@@ -52,57 +65,61 @@
 						<tbody>
 							<tr>
 								<th>Pseudo :</th>
-								<td><input name="pseudo" type="text" required
+								<td><input class="form-control" name="pseudo" type="text" required
 									pattern="([A-Za-z0-9]+)" maxlength="15" value="${user.pseudo}"></td>
 								<c:if test="${tooSmall < 4}">
-									<td style="color: red;">Le pseudo doit être suppérieur à 4
+									<td style="color: red;"> -> Le pseudo doit être suppérieur à 4
 										caractères !</td>
 								</c:if>
 							</tr>
 							<tr>
 								<th>Nom :</th>
-								<td><input name="nom" type="text" required
+								<td><input class="form-control" name="nom" type="text" required
 									value="${user.nom}"></td>
 							</tr>
 							<tr>
 								<th>Prénom :</th>
-								<td><input name="prenom" type="text" required
+								<td><input class="form-control" name="prenom" type="text" required
 									value="${user.prenom}"></td>
 							</tr>
 							<tr>
 								<th>Email :</th>
-								<td><input name="email" type="email" required
+								<td><input class="form-control" name="email" type="email" required
 									value="${user.email}"
 									pattern="[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})">
 								</td>
 							</tr>
 							<tr>
 								<th>Téléphone :</th>
-								<td><input name="telephone" type="tel"
+								<td><input class="form-control" name="telephone" type="tel"
 									value="${user.telephone}"
 									pattern="(01|02|03|04|05|06|07|08|09)[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}[ \.\-]?[0-9]{2}"></td>
 							</tr>
 							<tr>
 								<th>Adresse :</th>
-								<td><input name="rue" type="text" required
+								<td><input class="form-control" name="rue" type="text" required
 									value="${user.rue}"></td>
 
 							</tr>
 							<tr>
 								<th>Code postal :</th>
-								<td><input name="codePostal" type="text" required
+								<td><input class="form-control" name="codePostal" type="text" required
 									value="${user.codePostal}"
 									pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"></td>
 							</tr>
 							<tr>
 								<th>Ville :</th>
-								<td><input name="ville" type="text" required
+								<td><input class="form-control" name="ville" type="text" required
 									value="${user.ville}"></td>
 							</tr>
 							<tr>
-								<th>Mot de passe :</th>
-								<td><input name="motDePasse" type="password"
+								<th>Mot de passe : </th>
+								<td><input class="form-control" name="motDePasse" type="password"
 									placeholder="*******" required></td>
+								<c:if test="${isNotOk == false}">
+									<td style="color:red;"> -> Mot de passe incorrect</td>
+								</c:if>
+								
 							</tr>
 							<tr>
 								<th>Crédit :</th>
@@ -110,9 +127,8 @@
 							</tr>
 						</tbody>
 					</table>
+					<input type="hidden" name="mdp_tocheck" value="${user.motDePasse}">
 					<hr>
-					<input type="submit" class="btn btn-dark" value="Modifier">
-					<a href="${pageContext.request.contextPath}/ServletAjoutArticle" class="btn btn-dark">Créer une enchère</a>
 				</form>
 			</div>
 		</div>

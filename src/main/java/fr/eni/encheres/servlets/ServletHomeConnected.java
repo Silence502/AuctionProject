@@ -103,7 +103,7 @@ public class ServletHomeConnected extends HttpServlet {
 	request.setAttribute("listeCategories", selectionNomCat);
 	request.setAttribute("choix", choix);
 
-	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+	RequestDispatcher rd = request.getRequestDispatcher("/ServletListeArticles");
 	rd.forward(request, response);
 	
     }
@@ -126,7 +126,7 @@ public class ServletHomeConnected extends HttpServlet {
 	request.setAttribute("listeCategories", selectionNomCat);
 	request.setAttribute("choix", "toutes");
 
-	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+	RequestDispatcher rd = request.getRequestDispatcher("/ServletListeArticles");
 	rd.forward(request, response);
 
     }

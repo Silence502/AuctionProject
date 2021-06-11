@@ -23,7 +23,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     private final String SELECT_ALL = "SELECT * FROM UTILISATEURS";
     private final String UPDATE = "UPDATE UTILISATEURS SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
     private final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?";
-
+    private final String SELECT = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
     PreparedStatement stmt = null;
     PreparedStatement stmtCheck = null;
     BusinessException businessException = new BusinessException();
@@ -112,7 +112,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
      *            passe. Prend en paramètre deux chaînes de caractères.
      */
     @Override
-    public Utilisateur selectByPseudo(String id, String mdp) {
+    public Utilisateur selectByMdp(String id, String mdp) {
 	try (Connection con = ConnectionProvider.getConnection()) {
 	    stmt = con.prepareStatement(SELECT_BY_PS);
 	    // Récupération du pseudo et l'email dans la même variable de sorte que
@@ -120,6 +120,26 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    stmt.setString(1, id);
 	    stmt.setString(2, id);
 	    stmt.setString(3, mdp);
+	    ResultSet rs = stmt.executeQuery();
+	    if (rs.next()) {
+		utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+			rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+			rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+			rs.getInt("credit"));
+	    }
+	    stmt.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	return utilisateur;
+    }
+    
+    @Override
+    public Utilisateur selectPseudo(String id) {
+	try (Connection con = ConnectionProvider.getConnection()) {
+	    stmt = con.prepareStatement(SELECT);
+	    // Récupération du pseudo
+	    stmt.setString(1, id);
 	    ResultSet rs = stmt.executeQuery();
 	    if (rs.next()) {
 		utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
