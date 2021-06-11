@@ -49,6 +49,7 @@ public class ServletProfileManager extends HttpServlet {
 	String codePostal = request.getParameter("codePostal");
 	String ville = request.getParameter("ville");
 	String motDePasse = request.getParameter("motDePasse");
+	String mdp_tocheck = request.getParameter("mdp_tocheck");
 	String num = request.getParameter("id");
 	Integer noUtilisateur = Integer.parseInt(num);
 
@@ -57,6 +58,10 @@ public class ServletProfileManager extends HttpServlet {
 	    int tooSmallId = pseudo.length();
 	    request.setAttribute("tooSmall", tooSmallId);
 	    // On re-dispatche à la même page
+	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp");
+	    rd.forward(request, response);
+	} else if (!motDePasse.equals(mdp_tocheck)) {
+	    request.setAttribute("isNotOk", false);
 	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp");
 	    rd.forward(request, response);
 	} else {
@@ -73,7 +78,7 @@ public class ServletProfileManager extends HttpServlet {
 		session.setAttribute("user", utilisateur);
 		// On remplace l'attribut de session par le nouvel utilisateur
 		request.setAttribute("changedSession", CHANGED);
-		RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/ServletHomeConnected");
 		rd.forward(request, response);
 	    } catch (UtilisateurException e) {
 		e.getMessage();

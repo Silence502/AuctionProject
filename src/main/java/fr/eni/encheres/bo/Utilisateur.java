@@ -1,6 +1,5 @@
 package fr.eni.encheres.bo;
 
-import java.util.Iterator;
 
 public class Utilisateur {
     private Integer noUtilisateur;

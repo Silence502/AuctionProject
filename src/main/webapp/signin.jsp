@@ -36,15 +36,15 @@
 					<label for="motDePasse">Mot de passe</label> 
 					<input value="${user.motDePasse}" type="password" name="motDePasse" placeholder="*******" required 
 							style="margin-bottom: 15px;">
-					<input type="submit"
+					<input type="submit"  class="btn btn-dark"
 						value="Connexion">
 				</form>
 				<form method="GET"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column"
 					action="${pageContext.request.contextPath}/ServletHomePage">
-					<input name="connexion" type="submit" value="Inscription">
+					<input class="btn btn-dark" type="submit" value="Inscription">
 				</form>
-				<a href="home.jsp">Retour</a>
+				<a href="${pageContext.request.contextPath}/ServletListeArticles">Retour</a>
 			</div>
 		</div>
 	</div>

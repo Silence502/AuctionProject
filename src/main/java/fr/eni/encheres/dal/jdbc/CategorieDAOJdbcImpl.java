@@ -15,7 +15,6 @@ import fr.eni.encheres.dal.CategorieDAO;
 import fr.eni.encheres.dal.CodesResultatDAL;
 import fr.eni.encheres.dal.ConnectionProvider;
 
-
 public class CategorieDAOJdbcImpl implements CategorieDAO {
 
     private static final String SELECT_ALL = "SELECT * FROM categories;";
@@ -23,51 +22,51 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 
     @Override
     public List<Categorie> selectAll() throws BusinessException {
-	
-    	List<Categorie> categories = new ArrayList<>();
-    	
+
+	List<Categorie> categories = new ArrayList<>();
+
 	try (Connection cnx = ConnectionProvider.getConnection()) {
-	    
-	    Statement stmt= cnx.createStatement();
-		ResultSet rs = stmt.executeQuery(SELECT_ALL);
-		
-		while (rs.next()) {
-		categories.add(new Categorie (rs.getInt("no_categorie"), rs.getString("libelle")));
-		}
-		}
-	
+
+	    Statement stmt = cnx.createStatement();
+	    ResultSet rs = stmt.executeQuery(SELECT_ALL);
+
+	    while (rs.next()) {
+		categories.add(new Categorie(rs.getInt("no_categorie"), rs.getString("libelle")));
+	    }
+	}
+
 	catch (Exception e) {
 	    e.printStackTrace();
 	    BusinessException businessException = new BusinessException();
 	    businessException.ajouterErreur(CodesResultatDAL.SELECT_ALL_CATEGORIE_ECHEC);
-	    throw businessException;}
-	
+	    throw businessException;
+	}
+
 	return categories;
     }
 
-	@Override
-	public int selectNoByLibelle(String libelle) throws BusinessException {
-		
-		int no = 0;
+    @Override
+    public int selectNoByLibelle(String libelle) throws BusinessException {
 
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-		    
-			PreparedStatement pstmt= cnx.prepareStatement(SELECT_NO_BY_LIBELLE);
-			pstmt.setString(1, libelle);
-			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
-			no = rs.getInt("no_categorie");
-			}
-			}
-		
-		catch (Exception e) {
-		    e.printStackTrace();
-		    BusinessException businessException = new BusinessException();
-		    businessException.ajouterErreur(CodesResultatDAL.SELECT_ALL_CATEGORIE_ECHEC);
-		    throw businessException;}
-		
-		return no;
+	int no = 0;
+
+	try (Connection cnx = ConnectionProvider.getConnection()) {
+
+	    PreparedStatement pstmt = cnx.prepareStatement(SELECT_NO_BY_LIBELLE);
+	    pstmt.setString(1, libelle);
+	    ResultSet rs = pstmt.executeQuery();
+	    if (rs.next()) {
+		no = rs.getInt("no_categorie");
+	    }
 	}
-}
-    
 
+	catch (Exception e) {
+	    e.printStackTrace();
+	    BusinessException businessException = new BusinessException();
+	    businessException.ajouterErreur(CodesResultatDAL.SELECT_ALL_CATEGORIE_ECHEC);
+	    throw businessException;
+	}
+
+	return no;
+    }
+}

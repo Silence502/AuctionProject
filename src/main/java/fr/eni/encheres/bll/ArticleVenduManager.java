@@ -1,15 +1,12 @@
 package fr.eni.encheres.bll;
 
-import java.text.DateFormat;
-
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
+import java.util.List;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.ArticleVenduDAO;
 import fr.eni.encheres.dal.DAOFactory;
 
@@ -32,6 +29,11 @@ public class ArticleVenduManager {
     public ArticleVenduManager() {
 	this.articleVenduDAO = DAOFactory.getArticleVenduDAO();
     }
+    
+    public List<ArticleVendu> getArticleVendu() throws BusinessException {
+	List<ArticleVendu> list = articleVenduDAO.selectAll();
+	return list;
+    }
 
     /**
      * @param description
@@ -39,29 +41,15 @@ public class ArticleVenduManager {
      * @return un objet ArticleVendu en cas de succcès
      * @throws BusinessException
      */
-    public ArticleVendu ajouter(String nom, String description, LocalDate dateDebut, LocalDate dateFin, int miseAPrix,
-	    Categorie categorie) throws BusinessException
-
-    {
+    public void ajouter(ArticleVendu a, Utilisateur u) throws BusinessException {
 	BusinessException exception = new BusinessException();
-
-	ArticleVendu articleVendu = new ArticleVendu(nom, description, dateDebut, dateFin, miseAPrix, categorie);
-
-	this.validerNom(articleVendu, exception);
-	this.validerDescription(articleVendu, exception);
-	this.validerDateDebut(articleVendu, exception);
-	this.validerDateFin(articleVendu, exception);
-	this.validerMiseAPrix(articleVendu, exception);
-	this.validerCategorie(articleVendu, exception);
-
 	if (!exception.hasErreurs()) {
-	    this.articleVenduDAO.insert(articleVendu);
+	    this.articleVenduDAO.insert(a, u);
 	}
 
 	if (exception.hasErreurs()) {
 	    throw exception;
 	}
-	return articleVendu;
     }
 
    

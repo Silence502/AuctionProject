@@ -20,7 +20,7 @@ public class UtilisateurManager {
     
     public Utilisateur selectUtilisateur(String pseudo, String mdp) {
 	Utilisateur user = new Utilisateur();
-	user = utilisateurDAO.selectByPseudo(pseudo, mdp);
+	user = utilisateurDAO.selectByMdp(pseudo, mdp);
 	return user;
     }
     
@@ -33,6 +33,12 @@ public class UtilisateurManager {
     public List<Utilisateur> getUtilisateur(){
 	List<Utilisateur> list = utilisateurDAO.selectAll();
 	return list;
+    }
+    
+    public Utilisateur selectPseudo(String pseudo) {
+	Utilisateur user = new Utilisateur();
+	user = utilisateurDAO.selectPseudo(pseudo);
+	return user;
     }
     
     public void updateUtilisateur(Utilisateur u) throws UtilisateurException, NullPointerException {

@@ -1,11 +1,9 @@
 package fr.eni.encheres.bo;
 
-import java.io.Serializable;
 
 import java.time.LocalDate;
 
-public class ArticleVendu implements Serializable {
-	
+public class ArticleVendu {
 	private int noArticle;
 	private String nomArticle;
 	private String description;
@@ -16,7 +14,7 @@ public class ArticleVendu implements Serializable {
 	private EtatVente etatVente;
 	private Retrait lieuRetrait;
 	private Categorie categorieArticle;
-	private int noUtilisateur;
+	private Integer noUtilisateur;
 	
 	
 	public ArticleVendu() {
@@ -25,7 +23,6 @@ public class ArticleVendu implements Serializable {
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, int miseAPrix) {
-		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -39,7 +36,6 @@ public class ArticleVendu implements Serializable {
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente, Retrait lieuRetrait,
 			Categorie categorieArticle) {
-		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -55,7 +51,6 @@ public class ArticleVendu implements Serializable {
 
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			int miseAPrix, Categorie categorieArticle) {
-		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
@@ -67,9 +62,29 @@ public class ArticleVendu implements Serializable {
 	
 
 
+	/**
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param miseAPrix
+	 * @param categorieArticle
+	 * @param noUtilisateur
+	 */
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
+		LocalDate dateFinEncheres, int miseAPrix, Integer noUtilisateur, Categorie categorieArticle) {
+	    this.nomArticle = nomArticle;
+	    this.description = description;
+	    this.dateDebutEncheres = dateDebutEncheres;
+	    this.dateFinEncheres = dateFinEncheres;
+	    this.miseAPrix = miseAPrix;
+	    this.categorieArticle = categorieArticle;
+	    this.noUtilisateur = noUtilisateur;
+	}
+
+
 	public ArticleVendu(String nomArticle, String description, LocalDate dateFinEncheres, int prixVente,
 			int noUtilisateur) {
-		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateFinEncheres = dateFinEncheres;
@@ -176,6 +191,23 @@ public class ArticleVendu implements Serializable {
 	public void setCategorieArticle(Categorie categorieArticle) {
 		this.categorieArticle = categorieArticle;
 	}
+	/**
+	 * Getter de noUtilisateur
+	 * @return noUtilisateur
+	 */
+	public Integer getNoUtilisateur() {
+	    return noUtilisateur;
+	}
+
+
+	/**
+	 * Setter de noUtilisateur
+	 * @param noUtilisateur étant noUtilisateur à paramétrer de type Integer
+	 */
+	public void setNoUtilisateur(Integer noUtilisateur) {
+	    this.noUtilisateur = noUtilisateur;
+	}
+	
 
 
 	@Override
@@ -193,6 +225,9 @@ public class ArticleVendu implements Serializable {
 		return (art.nomArticle.equals(nomArticle) && (art.description.equals(description)) && (art.dateFinEncheres.equals(dateFinEncheres)) 
 				&& (art.prixVente == prixVente) && (art.noUtilisateur == noUtilisateur));
 	}
+
+
+	
 	
 
 }

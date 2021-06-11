@@ -1,14 +1,22 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.UtilisateurException;
+import fr.eni.encheres.bll.ArticleVenduManager;
 import fr.eni.encheres.bll.UtilisateurManager;
+import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.dal.ArticleVenduDAO;
+import fr.eni.encheres.dal.CategorieDAO;
+import fr.eni.encheres.dal.DAOFactory;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +30,6 @@ import jakarta.servlet.http.HttpSession;
 public class ServletHomePage extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final boolean IS_EXISTS = true;
-
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      *      response)
