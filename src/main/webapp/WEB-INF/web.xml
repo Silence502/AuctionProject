@@ -2,14 +2,18 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee;http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>AuctionProject</display-name>
   <welcome-file-list>
-    <welcome-file>home.jsp</welcome-file>
+    <welcome-file>ServletListeArticles</welcome-file>
   </welcome-file-list>
+  <servlet>
+  	<servlet-name>ServletListeArticles</servlet-name>
+  	<servlet-class>fr.eni.encheres.servlets.ServletListeArticles</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+  	<servlet-name>ServletListeArticles</servlet-name>
+  	<url-pattern>/listeArticlesTest</url-pattern>
+  </servlet-mapping>
   <session-config>
-  	<cookie-config>
-  		<comment>Id de session</comment>
-  		<max-age>50</max-age>
-  	</cookie-config>
   	<session-timeout>30</session-timeout>
   </session-config>
 </web-app>

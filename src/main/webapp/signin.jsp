@@ -20,30 +20,31 @@
 	<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
+	<p>Session numéro : ${pageContext.session.id} | ${user.pseudo}-${user.noUtilisateur}</p>
 	<div class="container">
 		<div class="row">
 			<div class="col col-md-4-justify-content box"
 				style="display: flex; align-content: center; align-items: center; flex-direction: column">
 				<h1>Connexion</h1>
 				<!--Si l'attribut de la session connected est false : affichage du warning-->
-				<c:if test="${sessionScope.connected == false}"><span style="color: red;">Identifiants ou mot de passe incorrect</span></c:if>
+				<c:if test="${connected == false}"><span style="color: red;">Identifiants ou mot de passe incorrect</span></c:if>
 				<form method="POST" action="${pageContext.request.contextPath}/ServletConnection"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
 					<label for="id">Pseudo ou email</label> 
-					<input value="${sessionScope.pseudo}" type="text" name="id" placeholder="pseudo ou email" autofocus="autofocus" required="required" 
+					<input value="${user.pseudo}" type="text" name="id" placeholder="pseudo ou email" autofocus="autofocus" required 
 							style="margin-bottom: 15px;">
 					<label for="motDePasse">Mot de passe</label> 
-					<input value="${sessionScope.motDePasse}" type="password" name="motDePasse" placeholder="*******" required="required" 
+					<input value="${user.motDePasse}" type="password" name="motDePasse" placeholder="*******" required 
 							style="margin-bottom: 15px;">
-					<input type="submit"
+					<input type="submit"  class="btn btn-dark"
 						value="Connexion">
 				</form>
 				<form method="GET"
 					style="display: flex; align-content: center; align-items: center; flex-direction: column"
 					action="${pageContext.request.contextPath}/ServletHomePage">
-					<input name="connexion" type="submit" value="Inscription">
+					<input class="btn btn-dark" type="submit" value="Inscription">
 				</form>
-				<a href="home.jsp">Retour</a>
+				<a href="${pageContext.request.contextPath}/ServletListeArticles">Retour</a>
 			</div>
 		</div>
 	</div>

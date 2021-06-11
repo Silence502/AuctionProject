@@ -1,5 +1,6 @@
 package fr.eni.encheres.bo;
 
+
 public class Utilisateur {
     private Integer noUtilisateur;
     private String pseudo;
@@ -19,6 +20,7 @@ public class Utilisateur {
     public Utilisateur() {
     }
     /**
+     * @param noUtilisateur
      * @param pseudo
      * @param nom
      * @param prenom
@@ -31,8 +33,9 @@ public class Utilisateur {
      * Constructeur pour un utilisateur non administrateur pour remplissage
      * de formulaire.
      */
-    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+    public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 	    String rue, String codePostal, String ville, String motDePasse) {
+	this.noUtilisateur = noUtilisateur;
 	this.pseudo = pseudo;
 	this.nom = nom;
 	this.prenom = prenom;
@@ -54,11 +57,36 @@ public class Utilisateur {
      * @param codePostal
      * @param ville
      * @param motDePasse
+     */
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+	    String codePostal, String ville, String motDePasse) {
+	this.pseudo = pseudo;
+	this.nom = nom;
+	this.prenom = prenom;
+	this.email = email;
+	this.telephone = telephone;
+	this.rue = rue;
+	this.codePostal = codePostal;
+	this.ville = ville;
+	this.motDePasse = motDePasse;
+    }
+    /**
+     * @param noUtilisateur
+     * @param pseudo
+     * @param nom
+     * @param prenom
+     * @param email
+     * @param telephone
+     * @param rue
+     * @param codePostal
+     * @param ville
+     * @param motDePasse
      * @param credit
      * Constructeur complet pour un utilisateur non administrateur
      */
-    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+    public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 	    String rue, String codePostal, String ville, String motDePasse, Integer credit) {
+	this.noUtilisateur = noUtilisateur;
 	this.pseudo = pseudo;
 	this.nom = nom;
 	this.prenom = prenom;
@@ -101,6 +129,28 @@ public class Utilisateur {
 	this.administrateur = administrateur;
     }
     
+    /**
+     * @param pseudo
+     * @param nom
+     * @param prenom
+     * @param email
+     * @param telephone
+     * @param rue
+     * @param codePostal
+     * @param ville
+     * Constructeur dédié au listage des membres en public. Les informations privé sont donc homisent.
+     */
+    public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+	    String codePostal, String ville) {
+	this.pseudo = pseudo;
+	this.nom = nom;
+	this.prenom = prenom;
+	this.email = email;
+	this.telephone = telephone;
+	this.rue = rue;
+	this.codePostal = codePostal;
+	this.ville = ville;
+    }
     /**
      * @param pseudo
      * @param email

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
@@ -19,17 +20,20 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     private final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur=?";
     private final String SELECT_BY_PS = "SELECT * FROM UTILISATEURS WHERE pseudo=? OR email=? AND mot_de_passe=?";
     private final String SELECT_CHECK = "SELECT pseudo, email FROM UTILISATEURS WHERE pseudo=? OR email=?";
-
+    private final String SELECT_ALL = "SELECT * FROM UTILISATEURS";
+    private final String UPDATE = "UPDATE UTILISATEURS SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
+    private final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur=?";
+    private final String SELECT = "SELECT * FROM UTILISATEURS WHERE pseudo=?";
     PreparedStatement stmt = null;
     PreparedStatement stmtCheck = null;
     BusinessException businessException = new BusinessException();
 
     /**
-     * @parama utilisateur
-     * Méthode permetant l'insertion et donc l'inscription d'un utilisateur.
+     * @parama utilisateur Méthode permetant l'insertion et donc l'inscription d'un
+     *         utilisateur.
      */
     @Override
-    public void insert(Utilisateur utilisateur) throws UtilisateurException {
+    public void insert(Utilisateur utilisateur) throws UtilisateurException, NullPointerException {
 	Utilisateur userCheck = null;
 	try (Connection con = ConnectionProvider.getConnection()) {
 	    // Préparation d'un insert et d'un select
@@ -52,27 +56,21 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    ResultSet rsCheck = stmtCheck.executeQuery();
 	    if (rsCheck.next()) {// L'email et le pseudo étant uniquent le curseur ne se placera que sur l'unique
 				 // ligne générée
-		// Construction d'un utilisateur avec seulement le pseudo et l'email s'ils a ont
-		// été trouvé dans la BDD
-		// avec la requête select sinon il sera juste null
+		// Construction d'un utilisateur avec seulement le pseudo et l'email s'ils ont
+		// été trouvé dans la BDD avec la requête select sinon il sera juste null
 		userCheck = new Utilisateur(rsCheck.getString("pseudo"), rsCheck.getString("email"));
 	    }
+	    // Vérification des données récupéré dans la BDD
 	    try {
-		// Comparaison du pseudo et de l'email saisie avec le pseudo et l'email
-		// selectionné dans la BDD
-		if (utilisateur.getEmail().equalsIgnoreCase(userCheck.getEmail())
-			|| utilisateur.getPseudo().equalsIgnoreCase(userCheck.getPseudo())) {
-		    // S'il y a une correspondance on ferme tout.../...
-		    stmt.close();
-		    stmtCheck.close();
-		    // .../...et on propage l'exception jusqu'à la servlet chargée de gérer
-		    // l'inscription (ServletHomePage)
-		    throw new UtilisateurException("Un utilisateur est déjà enregistré avec ce pseudo ou cet email");
+		if (userCheck.getEmail().trim() != null || userCheck.getPseudo().trim() != null) {
+		    // Si une correspondance à été trouvé on ferme tout et on propage l'exception
+		    // jusqu'a l'IHM
+		    throw new UtilisateurException("Les données saisie existent déjà dans la base de données !");
 		}
 	    } catch (NullPointerException e) {
-		// S'il n'y a pas de correspondance on ferme le select et on exécute l'insert
-		// avant fermeture
+		// On ferme le select
 		stmtCheck.close();
+		// On exécute l'insert
 		stmt.execute();
 		ResultSet rs = stmt.getGeneratedKeys();
 		if (rs.next()) {
@@ -86,8 +84,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
     }
 
     /**
-     * @param id
-     * Selection d'un utilisateur via son identifiant dans la BDD prenant en paramètre un entier.
+     * @param id Selection d'un utilisateur via son identifiant dans la BDD prenant
+     *           en paramètre un entier.
      */
     @Override
     public Utilisateur selectById(int id) {
@@ -96,8 +94,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    stmt.setInt(1, id);
 	    ResultSet rs = stmt.executeQuery();
 	    if (rs.next()) {
-		utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"),
-			rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+		utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+			rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
 			rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
 			rs.getInt("credit"));
 	    }
@@ -110,12 +108,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
     /**
      * @param id
-     * @param mdp
-     * Sélection d'un utilisateur via son pseudo/email et son mot de passe.
-     * Prend en paramètre deux chaînes de caractères.
+     * @param mdp Sélection d'un utilisateur via son pseudo/email et son mot de
+     *            passe. Prend en paramètre deux chaînes de caractères.
      */
     @Override
-    public Utilisateur selectByPseudo(String id, String mdp) {
+    public Utilisateur selectByMdp(String id, String mdp) {
 	try (Connection con = ConnectionProvider.getConnection()) {
 	    stmt = con.prepareStatement(SELECT_BY_PS);
 	    // Récupération du pseudo et l'email dans la même variable de sorte que
@@ -125,8 +122,30 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	    stmt.setString(3, mdp);
 	    ResultSet rs = stmt.executeQuery();
 	    if (rs.next()) {
-		utilisateur = new Utilisateur(rs.getString("pseudo"),
-			rs.getString("email"),rs.getString("mot_de_passe"));
+		utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+			rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+			rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+			rs.getInt("credit"));
+	    }
+	    stmt.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	return utilisateur;
+    }
+    
+    @Override
+    public Utilisateur selectPseudo(String id) {
+	try (Connection con = ConnectionProvider.getConnection()) {
+	    stmt = con.prepareStatement(SELECT);
+	    // Récupération du pseudo
+	    stmt.setString(1, id);
+	    ResultSet rs = stmt.executeQuery();
+	    if (rs.next()) {
+		utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+			rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+			rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+			rs.getInt("credit"));
 	    }
 	    stmt.close();
 	} catch (SQLException e) {
@@ -137,17 +156,95 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
     @Override
     public List<Utilisateur> selectAll() {
-	return null;
+	List<Utilisateur> list = new ArrayList<Utilisateur>();
+	try (Connection con = ConnectionProvider.getConnection()) {
+	    // On prépare la requête
+	    stmt = con.prepareStatement(SELECT_ALL);
+	    ResultSet rs = stmt.executeQuery();
+	    // Tant qu'il existe une ligne suivante
+	    while (rs.next()) {
+		// On reconstruit l'utilisateur
+		utilisateur = new Utilisateur(rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"),
+			rs.getString("email"), rs.getString("telephone").toString().trim(), rs.getString("rue"),
+			rs.getString("code_postal"), rs.getString("ville"));
+		// Et on l'ajoute à la liste
+		list.add(utilisateur);
+	    }
+	    stmt.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+	return list;
     }
 
     @Override
-    public void update(Utilisateur utilisateur) {
-
+    public void update(Utilisateur utilisateur) throws UtilisateurException, NullPointerException {
+	Utilisateur userCheck = null;
+	try (Connection con = ConnectionProvider.getConnection()) {
+	    // On prépare la requête update
+	    stmt = con.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
+	    stmtCheck = con.prepareStatement(SELECT_CHECK);
+	    stmt.setString(1, utilisateur.getPseudo());
+	    stmt.setString(2, utilisateur.getNom());
+	    stmt.setString(3, utilisateur.getPrenom());
+	    stmt.setString(4, utilisateur.getEmail());
+	    stmt.setString(5, utilisateur.getTelephone());
+	    stmt.setString(6, utilisateur.getRue());
+	    stmt.setString(7, utilisateur.getCodePostal());
+	    stmt.setString(8, utilisateur.getVille());
+	    stmt.setString(9, utilisateur.getMotDePasse());
+	    stmt.setInt(10, utilisateur.getNoUtilisateur());
+	    // Récupération des données saisie pour l'insert
+	    stmtCheck.setString(1, utilisateur.getPseudo());
+	    stmtCheck.setString(2, utilisateur.getEmail());
+	    ResultSet rsCheck = stmtCheck.executeQuery();
+	    if (rsCheck.next()) {// L'email et le pseudo étant uniquent le curseur ne se placera que sur l'unique
+		// ligne générée
+		// Construction d'un utilisateur avec seulement le pseudo et l'email s'ils ont
+		// été trouvé dans la BDD avec la requête select sinon il sera juste null
+		userCheck = new Utilisateur(rsCheck.getString("pseudo"), rsCheck.getString("email"));
+	    }
+	    // Vérification des données récupéré dans la BDD
+	    try {
+		// Si un pseudo ou un email correspondant est trouvé dans la BDD
+		if (userCheck.getEmail().trim() != null || userCheck.getPseudo().trim() != null) {
+		    // Et si ce pseudo et cet email sont égals aux donnée dans le formulaire
+		    if (userCheck.getEmail().equalsIgnoreCase(utilisateur.getEmail())
+			    || userCheck.getPseudo().equalsIgnoreCase(utilisateur.getPseudo())) {
+			stmtCheck.close();
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+			    utilisateur.setNoUtilisateur(1);
+			}
+			stmt.close();
+		    } else {
+			throw new UtilisateurException("Les données saisie existent déjà dans la base de données !");
+		    }
+		}
+	    } catch (NullPointerException e) {
+		stmtCheck.close();
+		stmt.executeUpdate();
+		ResultSet rs = stmt.getGeneratedKeys();
+		if (rs.next()) {
+		    utilisateur.setNoUtilisateur(1);
+		}
+		stmt.close();
+	    }
+	} catch (SQLException e) {
+	    throw new UtilisateurException("La mise à jour des données à échouée " + e);
+	}
     }
 
     @Override
     public void delete(int id) {
-
+	try (Connection con = ConnectionProvider.getConnection()) {
+	    stmt = con.prepareStatement(DELETE);
+	    stmt.setInt(1, id);
+	    stmt.executeUpdate();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
     }
 
 }
