@@ -29,11 +29,18 @@
 			<div class="col col-md-12">
 				<h1>Liste des membres</h1>
 				<hr>
-				<p><strong>Connecté :</strong> ${user.pseudo}  (<a href="${pageContext.request.contextPath}/ServletProfileManager">Voir profil</a>) | <a href="${pageContext.request.contextPath}/ServletListeArticles">Retour à l'accueil</a></p>
+				<div style="display: flex;justify-content: space-between;">
+					<div>
+					 	<p><strong>Connecté :</strong> ${user.pseudo}</p>
+					</div>
+					
+					<div>
+						<a href="${pageContext.request.contextPath}/ServletListeArticles">Retour
+						à l'accueil</a>
+					</div>
+				</div>
 				<hr>
-
 				<p>Membres inscrits : ${userList.size()}</p>
-				<p>${requestScope.request.testDetail}</p>
 				<table class="table">
 					<thead class="thead-dark">
 						<tr>
@@ -69,7 +76,6 @@
 						</c:forEach>
 					</tbody>
 				</table>
- 				
 			</div>
 		</div>
 	</div>
