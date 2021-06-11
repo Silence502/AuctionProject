@@ -73,7 +73,7 @@ public class ServletProfileManager extends HttpServlet {
 		session.setAttribute("user", utilisateur);
 		// On remplace l'attribut de session par le nouvel utilisateur
 		request.setAttribute("changedSession", CHANGED);
-		RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/ServletHomeConnected");
 		rd.forward(request, response);
 	    } catch (UtilisateurException e) {
 		e.getMessage();

@@ -17,13 +17,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletAjoutAvis
  */
-@WebServlet("/ServletListeArticles")
-public class ServletListeArticles extends HttpServlet {
+@WebServlet("/ServletHomeConnected")
+public class ServletHomeConnected extends HttpServlet {
     private static final long serialVersionUID = 1L;
     CategorieDAO categorieDAO = DAOFactory.getCategorieDAO();
     ArticleVenduDAO articleVenduDAO = DAOFactory.getArticleVenduDAO();
@@ -56,36 +55,13 @@ public class ServletListeArticles extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
 	
-	// Enregistre dans une variable la liste des articles
-	try {
-	    selectionArt = articleVenduDAO.selectAll();
-	} catch (BusinessException e) {
-	    e.printStackTrace();
-	}
-
-	request.setAttribute("selectionArticles", selectionArt);
-	request.setAttribute("listeCategories", selectionNomCat);
-	request.setAttribute("choix", "toutes");
-
-	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
-	rd.forward(request, response);
 	
-	
-    }
-
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     *      response)
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-
 	// on enregistre le choix de la catégorie dans la variable choix
 	choix = request.getParameter("categorie");
-	recherche = request.getParameter("recherche").trim();
+	recherche = request.getParameter("recherche");
 
 	// On s'assure que le choix n'est pas null
-	if (choix != null) {
+	if (!choix.equals(null)) {
 
 	    // si le choix est sur une catégorie
 	    if (!choix.equals("toutes")) {
@@ -110,7 +86,7 @@ public class ServletListeArticles extends HttpServlet {
 		    e.printStackTrace();
 		}
 	    }
-	    if ((recherche != null)) {
+	    if ((!recherche.equals(null)) && (!recherche.equals(""))) {
 		try {
 		    selectionArtMotCle = articleVenduDAO.selectByMotCle(recherche);
 		    System.out.println(selectionArtMotCle);
@@ -126,6 +102,29 @@ public class ServletListeArticles extends HttpServlet {
 	request.setAttribute("selectionArticles", selectionArt);
 	request.setAttribute("listeCategories", selectionNomCat);
 	request.setAttribute("choix", choix);
+
+	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+	rd.forward(request, response);
+	
+    }
+
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+
+	// Enregistre dans une variable la liste des articles
+	try {
+	    selectionArt = articleVenduDAO.selectAll();
+	} catch (BusinessException e) {
+	    e.printStackTrace();
+	}
+
+	request.setAttribute("selectionArticles", selectionArt);
+	request.setAttribute("listeCategories", selectionNomCat);
+	request.setAttribute("choix", "toutes");
 
 	RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
 	rd.forward(request, response);

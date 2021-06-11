@@ -1,50 +1,78 @@
-<%@page import="fr.eni.encheres.messages.LecteurMessage"%>
-<%@page import="java.util.List"%>
-<%@page import="fr.eni.encheres.bo.ArticleVendu"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lister les articles</title>
-
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">Z5HNVW24N33T-678105430-3881</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">e4fbd88a-9c55-481f-9bba-0498eeb0f0ab</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">http://inet/eni-transverse/ecole-numérique/_layouts/15/DocIdRedir.aspx?ID=Z5HNVW24N33T-678105430-3881, Z5HNVW24N33T-678105430-3881</mso:_dlc_DocIdUrl>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="../css/home-style.css">
 </head>
 <body>
-	
-	<form action="${pageContext.request.contextPath}/ServletListeArticles" method="post">
-		<fieldset>
-		<label for="idRecherche"></label><input type="texte" placeholder="Le nom de l'article contient" type="texte" id="idRecherche" name="recherche" value="<c:if test="${!empty listeCodesErreur}"> ${recherche} </c:if>">
-		<br/>
-		<label for="idCategorie">Catégorie : </label> <select id="idCategorie" name="categorie">
-		
-											<option value ="toutes"> TOUTES </option>
-		<c:forEach items="${listeCategories}" var ="cat">
-											<option <c:if test="${cat.equals(choix)}"> selected  </c:if> value="${cat}"> ${cat} </option>
-		</c:forEach>									
-											
-											</select>
-		<br/>
-		<br/>
-		<input type="submit" value="Rechercher"/>
+	<!--[if lt IE 7]>
+			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
 
-		</fieldset> 
-		
-		<c:if test="${!empty selectionArticles}"> 
-		<c:forEach items="${selectionArticles}" var ="article">
-		<p> ${article.toString()}</p>
-		</c:forEach>
-		</c:if>
-										
-	</form>
-	<a href="index.html">Retour</a>
+	<p>Session numéro : ${pageContext.session.id} |
+		${user.pseudo}-${user.noUtilisateur}</p>
+	<p>${test }</p>
+	<div class="container">
+		<div class="row">
+			<div class="col col-md-12"
+				style="display: flex; align-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
+				<h1>Liste des enchères</h1>
+				<a href="${pageContext.request.contextPath}/ServletConnection">Se
+					déconnecter</a> <a
+					href="${pageContext.request.contextPath}/ServletMembersList">Liste
+					des membres</a> <a
+					href="${pageContext.request.contextPath}/ServletProfileManager">Mon
+					profil</a>
+				<p>Session ouverte : ${user.pseudo}</p>
+				<hr>
+				<form
+					action="${pageContext.request.contextPath}/ServletListeArticles"
+					method="POST">
+					<h3>Filtres :</h3>
+					<div class="form-inline">
+						<input class="form-control" type="texte"
+							placeholder="Le nom de l'article contient" type="texte"
+							id="idRecherche" name="recherche" style="margin-right:2%;"
+							value="<c:if test="${!empty listeCodesErreur}"> ${recherche} </c:if>">
+							<input type="submit" class="btn btn-dark" value="Rechercher" />
+					</div>
+					
+					<hr>
+					<div class="form-group">
+						<label for="idCategorie">Catégorie : </label> 
+						<select id="idCategorie" name="categorie">
+							<option class="form-control" value="toutes">TOUTES</option>
+							<c:forEach items="${listeCategories}" var="cat">
+								<option <c:if test="${cat.equals(choix)}"> selected  </c:if>
+									value="${cat}">${cat}</option>
+							</c:forEach>
+						</select> <br /> <br />
+					</div>
+					<c:if test="${!empty selectionArticles}">
+						<c:forEach items="${selectionArticles}" var="article">
+							<p>${article.toString()}</p>
+						</c:forEach>
+					</c:if>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src=""></script>
 </body>
 </html>

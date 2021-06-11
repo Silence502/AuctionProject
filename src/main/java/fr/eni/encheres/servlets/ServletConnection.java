@@ -60,7 +60,8 @@ public class ServletConnection extends HttpServlet {
 		// Si le mot de passe correspond
 		session.setAttribute("user", utilisateur);
 		session.setAttribute("userConnected", IS_CORRECT);
-		response.sendRedirect("home.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/ServletHomeConnected");
+		rd.forward(request, response);
 	    } else {
 		// Si le mot de passe ne correspond pas
 		request.setAttribute("connected", IS_NOT_CORRECT);

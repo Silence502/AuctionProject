@@ -31,7 +31,7 @@
 				<h1>Profil</h1>
 				<hr>
 				<p>
-					<strong>Connecté :</strong> ${user.pseudo} | <a href="home.jsp">Retour
+					<strong>Connecté :</strong> ${user.pseudo} | <a href="${pageContext.request.contextPath}/ServletListeArticles">Retour
 						à l'accueil</a>
 				</p>
 				<hr>
@@ -112,6 +112,7 @@
 					</table>
 					<hr>
 					<input type="submit" class="btn btn-dark" value="Modifier">
+					<a href="${pageContext.request.contextPath}/ServletAjoutArticle" class="btn btn-dark">Créer une enchère</a>
 				</form>
 			</div>
 		</div>

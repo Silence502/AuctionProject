@@ -8,12 +8,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ServletTest
+ * Servlet implementation class ServletHomeDisconnected
  */
-@WebServlet("/ServletTest")
-public class ServletTest extends HttpServlet {
+@WebServlet("/ServletHomeDisconnected")
+public class ServletHomeDisconnected extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -22,9 +23,15 @@ public class ServletTest extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	
-	
-	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/membersList.jsp");
+	// Obtention de la session en cours
+	HttpSession session = request.getSession();
+	// Si une session existe bel et bien on déconnecte
+	if (session != null) {
+	    session.invalidate();
+	}
+
+	// Retour à la page d'accueil
+	RequestDispatcher rd = request.getRequestDispatcher("/ServletListeArticles");
 	rd.forward(request, response);
     }
 
@@ -34,10 +41,8 @@ public class ServletTest extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	String bjr = "Bonjour je suis un détail";
-	request.setAttribute("detail", bjr);
-	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/membersList.jsp");
-	rd.forward(request, response);
+	// TODO Auto-generated method stub
+	doGet(request, response);
     }
 
 }
